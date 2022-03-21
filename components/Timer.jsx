@@ -1,23 +1,16 @@
 import { Picker } from "@react-native-picker/picker";
 import {
-  Dimensions,
   SafeAreaView,
   View,
   Text,
   Button,
   TouchableOpacity,
   StyleSheet,
-  TouchableOpacityComponent,
 } from "react-native";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import { useState } from "react";
-import {
-  useDimensions,
-  useDeviceOrientation,
-} from "@react-native-community/hooks";
 
-const ChangeLength = ({ setDuration }) => {
-  const [selectedDuration, setSelectedDuration] = useState();
+const ChangeFocus = ({ setDurationFocus }) => {
   const [showLength, setShowLength] = useState(false);
   const minuteArr = [20, 25, 30, 35, 40, 45];
 
@@ -25,7 +18,7 @@ const ChangeLength = ({ setDuration }) => {
     <>
       <View>
         <Button
-          title="Change time"
+          title="Change focus"
           onPress={() =>
             showLength ? setShowLength(false) : setShowLength(true)
           }
@@ -35,11 +28,9 @@ const ChangeLength = ({ setDuration }) => {
         <TouchableOpacity>
           {showLength ? (
             <Picker
-              selectedValue={selectedDuration}
               onValueChange={(itemValue) => {
                 setShowLength(false);
-                setDuration(itemValue * 60);
-                setSelectedDuration(itemValue);
+                setDurationFocus(itemValue * 60);
               }}
             >
               {minuteArr.map((number) => {
@@ -61,29 +52,54 @@ const ChangeLength = ({ setDuration }) => {
   );
 };
 
-// const Break = () => {
-//   const [duration, setDuration] = useState(5);
-//   const [playing, setPlaying] = useState(false);
+const ChangeBreak = ({ setDurationBreak }) => {
+  const [showLength, setShowLength] = useState(false);
+  const minuteArr = [5, 10, 15];
 
-//   return (
+  return (
+    <>
+      <View>
+        <Button
+          title="Change break"
+          onPress={() =>
+            showLength ? setShowLength(false) : setShowLength(true)
+          }
+          styles={styles.button}
+        ></Button>
 
-//   );
-// };
-
-// const Focus = ({ setIsBreak }) => {
-//   const [playing, setPlaying] = useState(false);
-//   const [duration, setDuration] = useState(10);
-
-//   return (
-
-//   );
-// };
+        <TouchableOpacity>
+          {showLength ? (
+            <Picker
+              onValueChange={(itemValue) => {
+                setShowLength(false);
+                setDurationBreak(itemValue * 60);
+              }}
+            >
+              {minuteArr.map((number) => {
+                return (
+                  <Picker.Item
+                    label={`${number}`}
+                    value={`${number}`}
+                    key={`${number}`}
+                  ></Picker.Item>
+                );
+              })}
+            </Picker>
+          ) : (
+            <Text></Text>
+          )}
+        </TouchableOpacity>
+      </View>
+    </>
+  );
+};
 
 const Timer = () => {
-  const [duration, setDuration] = useState(10);
+  const [durationFocus, setDurationFocus] = useState(10);
   const [isBreak, setIsBreak] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [startBreak, setStartBreak] = useState(false);
+  const [durationBreak, setDurationBreak] = useState(5);
 
   return (
     <>
@@ -99,7 +115,11 @@ const Timer = () => {
       >
         <View>
           <TouchableOpacity>
-            <ChangeLength setDuration={setDuration} />
+            {isBreak ? (
+              <ChangeBreak setDurationBreak={setDurationBreak} />
+            ) : (
+              <ChangeFocus setDurationFocus={setDurationFocus} />
+            )}
             {isBreak ? (
               <TouchableOpacity>
                 <TouchableOpacity
@@ -109,7 +129,7 @@ const Timer = () => {
                 >
                   <CountdownCircleTimer
                     isPlaying={startBreak}
-                    duration={5}
+                    duration={durationBreak}
                     colors={"#F7B801"}
                     onComplete={() => {
                       setStartBreak(false);
@@ -131,7 +151,7 @@ const Timer = () => {
               >
                 <CountdownCircleTimer
                   isPlaying={playing}
-                  duration={duration}
+                  duration={durationFocus}
                   colors={"#F7B801"}
                   onComplete={() => {
                     setPlaying(false);
