@@ -61,10 +61,29 @@ const ChangeLength = ({ setDuration }) => {
   );
 };
 
+// const Break = () => {
+//   const [duration, setDuration] = useState(5);
+//   const [playing, setPlaying] = useState(false);
+
+//   return (
+
+//   );
+// };
+
+// const Focus = ({ setIsBreak }) => {
+//   const [playing, setPlaying] = useState(false);
+//   const [duration, setDuration] = useState(10);
+
+//   return (
+
+//   );
+// };
+
 const Timer = () => {
+  const [duration, setDuration] = useState(10);
+  const [isBreak, setIsBreak] = useState(false);
   const [playing, setPlaying] = useState(false);
-  const [duration, setDuration] = useState(1500);
-  const { landscape } = useDeviceOrientation();
+  const [startBreak, setStartBreak] = useState(false);
 
   return (
     <>
@@ -81,23 +100,53 @@ const Timer = () => {
         <View>
           <TouchableOpacity>
             <ChangeLength setDuration={setDuration} />
-            <TouchableOpacity
-              onPress={() => (playing ? setPlaying(false) : setPlaying(true))}
-            >
-              <CountdownCircleTimer
-                isPlaying={playing}
-                duration={duration}
-                colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-                colorsTime={[7, 5, 2, 0]}
-              >
-                {({ remainingTime }) => {
-                  const minutes = Math.floor(remainingTime / 60);
-                  const seconds = remainingTime % 60;
+            {isBreak ? (
+              <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    startBreak ? setStartBreak(false) : setStartBreak(true)
+                  }
+                >
+                  <CountdownCircleTimer
+                    isPlaying={startBreak}
+                    duration={5}
+                    colors={"#F7B801"}
+                    onComplete={() => {
+                      setStartBreak(false);
+                      setIsBreak(false);
+                    }}
+                  >
+                    {({ remainingTime }) => {
+                      const minutes = Math.floor(remainingTime / 60);
+                      const seconds = remainingTime % 60;
 
-                  return <Text>{`${minutes}:${seconds}`}</Text>;
-                }}
-              </CountdownCircleTimer>
-            </TouchableOpacity>
+                      return <Text>{`${minutes}:${seconds}`}</Text>;
+                    }}
+                  </CountdownCircleTimer>
+                </TouchableOpacity>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() => (playing ? setPlaying(false) : setPlaying(true))}
+              >
+                <CountdownCircleTimer
+                  isPlaying={playing}
+                  duration={duration}
+                  colors={"#F7B801"}
+                  onComplete={() => {
+                    setPlaying(false);
+                    setIsBreak(true);
+                  }}
+                >
+                  {({ remainingTime }) => {
+                    const minutes = Math.floor(remainingTime / 60);
+                    const seconds = remainingTime % 60;
+
+                    return <Text>{`${minutes}:${seconds}`}</Text>;
+                  }}
+                </CountdownCircleTimer>
+              </TouchableOpacity>
+            )}
           </TouchableOpacity>
         </View>
       </SafeAreaView>
