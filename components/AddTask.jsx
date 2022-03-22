@@ -1,27 +1,31 @@
-import {StyleSheet, View, TextInput, Button} from "react-native"
-import {useState} from "react"
+import { StyleSheet, View, TextInput, Button } from "react-native";
+import { useState } from "react";
 
 const AddTask = (props) => {
-  const [text, setText] = useState("");
+  const [inputText, setInputText] = useState("");
 
   const changeHandler = (val) => {
-    setText(val);
+    setInputText(val);
   };
 
-  const {addTask} = props;
+  const { addTask } = props;
   return (
     <View>
       <TextInput
         style={styles.input}
         placeholder="Add new task"
         onChangeText={changeHandler}
+        value={inputText}
       ></TextInput>
-       <Button
-          style={styles.taskButton}
-          title="add task"
-          color="blue"
-          onPress={() => addTask(text)}
-        />
+      <Button
+        style={styles.taskButton}
+        title="add task"
+        color="blue"
+        onPress={() => {
+          addTask(inputText)
+          setInputText("");
+        }}
+      />
     </View>
   );
 };

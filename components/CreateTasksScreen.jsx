@@ -1,10 +1,16 @@
-import { StyleSheet, SafeAreaView, View, FlatList, Text } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  FlatList,
+  Text,
+  ScrollView,
+} from "react-native";
 import AddTask from "./AddTask";
 import TaskCard from "./TaskCard";
 import { useState } from "react";
-import "react-native-get-random-values"
-import { v4 as uuidv4 } from 'uuid';
-
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
 
 export default function CreateTasksScreen() {
   const [tasks, setTasks] = useState([]);
@@ -14,28 +20,32 @@ export default function CreateTasksScreen() {
       return [{ task: text, id: uuidv4() }, ...prevTodos];
     });
   };
- 
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.tasksWrapper}>
-        <Text style={styles.title}>Tasklist</Text>
-        <View style={styles.content}>
-          <AddTask addTask={addTask} />
-          <View style={styles.list}>
-            <FlatList
-              data={tasks}
-              renderItem={({ item }) => <TaskCard item={item} />}
-            />
-           
+      <ScrollView>
+        <View style={styles.tasksWrapper}>
+          <Text style={styles.title}>Tasklist</Text>
+          <View style={styles.content}>
+            <AddTask addTask={addTask} />
+            <View style={styles.list}>
+              <FlatList
+                data={tasks}
+                renderItem={({ item }) => (
+                  <TaskCard setTasks={setTasks} item={item} />
+                )}
+              />
+            </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    width: "100%",
     flex: 1,
     backgroundColor: "white",
   },
@@ -43,7 +53,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     paddingLeft: 20,
-    paddingTop: 20
+    paddingTop: 20,
   },
   content: {
     padding: 40,
