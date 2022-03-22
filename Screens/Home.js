@@ -8,6 +8,7 @@ import Focus from "./Focus";
 import Stats from "./Stats";
 import Setting from "./Setting";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Timer from "../components/Timer";
 const Tab = createMaterialBottomTabNavigator();
 
 export default function Home() {
@@ -41,7 +42,7 @@ export default function Home() {
         />
         <Tab.Screen
           name="Focus"
-          component={Focus}
+          component={Timer}
           options={{
             tabBarLabel: "Focus",
             tabBarIcon: ({ color }) => (
