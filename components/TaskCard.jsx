@@ -1,20 +1,22 @@
 import { StyleSheet, Text, TouchableOpacity,View } from "react-native";
 
-const TaskCard = ({ item, setTasks }) => {
 
-  const deleteHandler = () => {
+const TaskCard = ({ item, setTasks, prevTodos }) => {
+
+  // const deleteHandler = () => {
+
+
     
-    return [...prevTodos]
-  }
+  // }
 
   return (
     <View style={styles.item}>
       <TouchableOpacity >
         <Text>{item.task}</Text>
       </TouchableOpacity>
-      <TouchableOpacity>
+      {/* <TouchableOpacity>
         <Text onPress={deleteHandler}>Delete</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };
