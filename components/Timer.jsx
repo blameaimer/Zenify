@@ -17,15 +17,12 @@ const ChangeFocus = ({ setDurationFocus }) => {
   return (
     <>
       <View>
-        <Button
-          title="Change focus"
+        <TouchableOpacity
           onPress={() =>
             showLength ? setShowLength(false) : setShowLength(true)
           }
-          styles={styles.button}
-        ></Button>
-
-        <TouchableOpacity>
+        >
+          <Text style={styles.changelength}>Press Here</Text>
           {showLength ? (
             <Picker
               onValueChange={(itemValue) => {
@@ -59,15 +56,12 @@ const ChangeBreak = ({ setDurationBreak }) => {
   return (
     <>
       <View>
-        <Button
-          title="Change break"
+        <TouchableOpacity
           onPress={() =>
             showLength ? setShowLength(false) : setShowLength(true)
           }
-          styles={styles.button}
-        ></Button>
-
-        <TouchableOpacity>
+        >
+          <Text style={styles.changelength}>Press here</Text>
           {showLength ? (
             <Picker
               onValueChange={(itemValue) => {
@@ -175,6 +169,9 @@ const Timer = () => {
 };
 
 const styles = StyleSheet.create({
+  changelength: {
+    fontSize: 32,
+  },
   container: {},
   button: {},
 });
