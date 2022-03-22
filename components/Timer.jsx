@@ -1,45 +1,179 @@
-import { useCountdown } from "react-native-countdown-circle-timer";
-
-import { Text, Button, TouchableOpacity, StyleSheet } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  Button,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
-
 import { useState } from "react";
-// {
-//     path,
-//     pathLength,
-//     stroke,
-//     strokeDashoffset,
-//     remainingTime,
-//     elapsedTime,
-//     size,
-//     strokeWidth,
-//   } = useCountdown({ isPlaying: true, duration: 7, colors: "#abc" })
 
-const Timer = () => {
-  const [pressed, setPressed] = useState(false);
-  const [duration, setDuration] = useState(1500);
+const ChangeFocus = ({ setDurationFocus }) => {
+  const [showLength, setShowLength] = useState(false);
+  const minuteArr = [20, 25, 30, 35, 40, 45];
 
   return (
     <>
-      <TouchableOpacity
-        onPress={() => (pressed ? setPressed(false) : setPressed(true))}
-      >
-        <CountdownCircleTimer
-          isPlaying={pressed}
-          duration={duration}
-          colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-          colorsTime={[7, 5, 2, 0]}
+      <View>
+        <TouchableOpacity
+          onPress={() =>
+            showLength ? setShowLength(false) : setShowLength(true)
+          }
         >
-          {({ remainingTime }) => {
-            const minutes = Math.floor(remainingTime / 60);
-            const seconds = remainingTime % 60;
-
-            return <Text>{`${minutes}:${seconds}`}</Text>;
-          }}
-        </CountdownCircleTimer>
-      </TouchableOpacity>
+          <Text style={styles.changelength}>Press Here</Text>
+          {showLength ? (
+            <Picker
+              onValueChange={(itemValue) => {
+                setShowLength(false);
+                setDurationFocus(itemValue * 60);
+              }}
+            >
+              {minuteArr.map((number) => {
+                return (
+                  <Picker.Item
+                    label={`${number}`}
+                    value={`${number}`}
+                    key={`${number}`}
+                  ></Picker.Item>
+                );
+              })}
+            </Picker>
+          ) : (
+            <Text></Text>
+          )}
+        </TouchableOpacity>
+      </View>
     </>
   );
 };
+
+const ChangeBreak = ({ setDurationBreak }) => {
+  const [showLength, setShowLength] = useState(false);
+  const minuteArr = [5, 10, 15];
+
+  return (
+    <>
+      <View>
+        <TouchableOpacity
+          onPress={() =>
+            showLength ? setShowLength(false) : setShowLength(true)
+          }
+        >
+          <Text style={styles.changelength}>Press here</Text>
+          {showLength ? (
+            <Picker
+              onValueChange={(itemValue) => {
+                setShowLength(false);
+                setDurationBreak(itemValue * 60);
+              }}
+            >
+              {minuteArr.map((number) => {
+                return (
+                  <Picker.Item
+                    label={`${number}`}
+                    value={`${number}`}
+                    key={`${number}`}
+                  ></Picker.Item>
+                );
+              })}
+            </Picker>
+          ) : (
+            <Text></Text>
+          )}
+        </TouchableOpacity>
+      </View>
+    </>
+  );
+};
+
+const Timer = () => {
+  const [durationFocus, setDurationFocus] = useState(10);
+  const [isBreak, setIsBreak] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [startBreak, setStartBreak] = useState(false);
+  const [durationBreak, setDurationBreak] = useState(5);
+
+  return (
+    <>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          height: "50%",
+          backgroundColor: "dodgerblue",
+        }}
+      >
+        <View>
+          <TouchableOpacity>
+            {isBreak ? (
+              <ChangeBreak setDurationBreak={setDurationBreak} />
+            ) : (
+              <ChangeFocus setDurationFocus={setDurationFocus} />
+            )}
+            {isBreak ? (
+              <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    startBreak ? setStartBreak(false) : setStartBreak(true)
+                  }
+                >
+                  <CountdownCircleTimer
+                    isPlaying={startBreak}
+                    duration={durationBreak}
+                    colors={"#F7B801"}
+                    onComplete={() => {
+                      setStartBreak(false);
+                      setIsBreak(false);
+                    }}
+                  >
+                    {({ remainingTime }) => {
+                      const minutes = Math.floor(remainingTime / 60);
+                      const seconds = remainingTime % 60;
+
+                      return <Text>{`${minutes}:${seconds}`}</Text>;
+                    }}
+                  </CountdownCircleTimer>
+                </TouchableOpacity>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() => (playing ? setPlaying(false) : setPlaying(true))}
+              >
+                <CountdownCircleTimer
+                  isPlaying={playing}
+                  duration={durationFocus}
+                  colors={"#F7B801"}
+                  onComplete={() => {
+                    setPlaying(false);
+                    setIsBreak(true);
+                  }}
+                >
+                  {({ remainingTime }) => {
+                    const minutes = Math.floor(remainingTime / 60);
+                    const seconds = remainingTime % 60;
+
+                    return <Text>{`${minutes}:${seconds}`}</Text>;
+                  }}
+                </CountdownCircleTimer>
+              </TouchableOpacity>
+            )}
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    </>
+  );
+};
+
+const styles = StyleSheet.create({
+  changelength: {
+    fontSize: 32,
+  },
+  container: {},
+  button: {},
+});
 
 export default Timer;
