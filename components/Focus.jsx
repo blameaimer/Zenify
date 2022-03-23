@@ -9,6 +9,10 @@ export default function Focus({
   setStartFocus,
   setIsBreak,
 }) {
+  const handleCompletion = () => {
+    setStartFocus(false);
+    setIsBreak(true);
+  };
   return (
     <View>
       <Text>Focus Screen</Text>
@@ -21,11 +25,9 @@ export default function Focus({
         <CountdownCircleTimer
           isPlaying={startFocus}
           duration={durationFocus}
-          colors={"#F7B801"}
-          onComplete={() => {
-            setStartFocus(false);
-            setIsBreak(true);
-          }}
+          colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+          colorsTime={[7, 5, 2, 0]}
+          onComplete={() => handleCompletion()}
         >
           {({ remainingTime }) => {
             const minutes = Math.floor(remainingTime / 60);

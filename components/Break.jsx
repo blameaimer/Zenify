@@ -9,6 +9,11 @@ export default function Break({
   startBreak,
   setIsBreak,
 }) {
+  const handleCompletion = () => {
+    setStartBreak(false);
+    setIsBreak(false);
+  };
+
   return (
     <View>
       <Text>Break Screen</Text>
@@ -22,11 +27,9 @@ export default function Break({
           <CountdownCircleTimer
             isPlaying={startBreak}
             duration={durationBreak}
-            colors={"#F7B801"}
-            onComplete={() => {
-              setStartBreak(false);
-              setIsBreak(false);
-            }}
+            colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+            colorsTime={[7, 5, 2, 0]}
+            onComplete={() => handleCompletion()}
           >
             {({ remainingTime }) => {
               const minutes = Math.floor(remainingTime / 60);
