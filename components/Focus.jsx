@@ -13,6 +13,7 @@ export default function Focus({
     setStartFocus(false);
     setIsBreak(true);
   };
+
   return (
     <View>
       <Text>Focus Screen</Text>

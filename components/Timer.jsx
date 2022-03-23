@@ -1,14 +1,5 @@
-import {
-  SafeAreaView,
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
-import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
+import { SafeAreaView, View, TouchableOpacity, StyleSheet } from "react-native";
 import { useState } from "react";
-import ChangeBreak from "./ChangeBreak";
-import ChangeFocus from "./ChangeFocus";
 import Break from "./Break";
 import Focus from "./Focus";
 
