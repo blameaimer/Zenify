@@ -8,12 +8,16 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+
 import { auth, db } from "../firebase";
+
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [username, setUsername] = useState("");
+
 
   const navigation = useNavigation();
 
@@ -26,22 +30,14 @@ const LoginScreen = () => {
     return unsubscribe;
   }, []);
 
+
   const usersRef = db.ref("users");
-
-  // firebase.auth().createUserWithEmailAndPassword(email, password)
-  // .then(function(result) {
-  //   return result.user.updateProfile({
-  //     displayName: document.getElementById("name").value
-  //   })
-  // }).catch(function(error) {
-  //   console.log(error);
-  // });
-
   const handleSignUp = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
+
         user.updateProfile({
           displayName: username,
         });
@@ -80,6 +76,7 @@ const LoginScreen = () => {
           style={styles.input}
           secureTextEntry
         />
+
         <TextInput
           placeholder="Username"
           value={username}
