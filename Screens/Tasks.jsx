@@ -5,7 +5,6 @@ import { useState } from "react";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 
-
 export default function CreateTasksScreen() {
   const [tasks, setTasks] = useState([]);
 
@@ -13,11 +12,6 @@ export default function CreateTasksScreen() {
     setTasks((prevTodos) => {
       return [{ task: text, id: uuidv4() }, ...prevTodos];
     });
-
-    console.log(tasks)
-
-  
-
   };
 
   return (
