@@ -2,6 +2,7 @@ import * as React from "react";
 import { Image,TouchableOpacity} from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
+
 import Home from "./Screens/Home";
 import { createStackNavigator } from "@react-navigation/stack";
 import Meditation from "./Screens/Meditation";
