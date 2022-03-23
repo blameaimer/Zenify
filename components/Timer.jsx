@@ -9,12 +9,14 @@ import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import { useState } from "react";
 import ChangeBreak from "./ChangeBreak";
 import ChangeFocus from "./ChangeFocus";
+import Break from "./Break";
+import Focus from "./Focus";
 
 const Timer = () => {
-  const [durationFocus, setDurationFocus] = useState(10);
   const [isBreak, setIsBreak] = useState(false);
-  const [playing, setPlaying] = useState(false);
+  const [startFocus, setStartFocus] = useState(false);
   const [startBreak, setStartBreak] = useState(false);
+  const [durationFocus, setDurationFocus] = useState(10);
   const [durationBreak, setDurationBreak] = useState(5);
 
   return (
@@ -23,64 +25,21 @@ const Timer = () => {
         <View>
           <TouchableOpacity>
             {isBreak ? (
-              <>
-                <Text>Break Screen</Text>
-                <ChangeBreak setDurationBreak={setDurationBreak} />
-              </>
+              <Break
+                setDurationBreak={setDurationBreak}
+                durationBreak={durationBreak}
+                setStartBreak={setStartBreak}
+                startBreak={startBreak}
+                setIsBreak={setIsBreak}
+              />
             ) : (
-              <>
-                <Text>Focus Screen</Text>
-                <ChangeFocus setDurationFocus={setDurationFocus} />
-              </>
-            )}
-            {isBreak ? (
-              <TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() =>
-                    startBreak ? setStartBreak(false) : setStartBreak(true)
-                  }
-                >
-                  <CountdownCircleTimer
-                    isPlaying={startBreak}
-                    duration={durationBreak}
-                    colors={"#F7B801"}
-                    onComplete={() => {
-                      setStartBreak(false);
-                      setIsBreak(false);
-                    }}
-                  >
-                    {({ remainingTime }) => {
-                      const minutes = Math.floor(remainingTime / 60);
-                      const seconds = remainingTime % 60;
-                      const paddedSeconds = String(seconds).padStart(2, "0");
-
-                      return <Text>{`${minutes}:${paddedSeconds}`}</Text>;
-                    }}
-                  </CountdownCircleTimer>
-                </TouchableOpacity>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                onPress={() => (playing ? setPlaying(false) : setPlaying(true))}
-              >
-                <CountdownCircleTimer
-                  isPlaying={playing}
-                  duration={durationFocus}
-                  colors={"#F7B801"}
-                  onComplete={() => {
-                    setPlaying(false);
-                    setIsBreak(true);
-                  }}
-                >
-                  {({ remainingTime }) => {
-                    const minutes = Math.floor(remainingTime / 60);
-                    const seconds = remainingTime % 60;
-                    const paddedSeconds = String(seconds).padStart(2, "0");
-
-                    return <Text>{`${minutes}:${paddedSeconds}`}</Text>;
-                  }}
-                </CountdownCircleTimer>
-              </TouchableOpacity>
+              <Focus
+                setDurationFocus={setDurationFocus}
+                durationFocus={durationFocus}
+                startFocus={startFocus}
+                setStartFocus={setStartFocus}
+                setIsBreak={setIsBreak}
+              />
             )}
           </TouchableOpacity>
         </View>

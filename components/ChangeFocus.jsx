@@ -4,7 +4,7 @@ import { Picker } from "@react-native-picker/picker";
 
 export default function ChangeFocus({ setDurationFocus }) {
   const [showLength, setShowLength] = useState(false);
-  const minuteArr = [20, 25, 30, 35, 40, 45];
+  const minuteArr = ["session length", 20, 25, 30, 35, 40, 45];
 
   return (
     <>

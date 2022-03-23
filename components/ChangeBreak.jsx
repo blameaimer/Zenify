@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function ChangeBreak({ setDurationBreak }) {
   const [showLength, setShowLength] = useState(false);
-  const minuteArr = [5, 10, 15];
+  const minuteArr = ["break length", 5, 10, 15];
 
   return (
     <>
@@ -22,7 +22,7 @@ export default function ChangeBreak({ setDurationBreak }) {
                 setDurationBreak(itemValue * 60);
               }}
             >
-              {minuteArr.map((number) => {
+              {minuteArr.slice(1).map((number) => {
                 return (
                   <Picker.Item
                     label={`${number}`}
