@@ -8,11 +8,16 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { auth } from "../firebase";
+
+import { auth, db } from "../firebase";
+
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [username, setUsername] = useState("");
+
 
   const navigation = useNavigation();
 
@@ -25,11 +30,23 @@ const LoginScreen = () => {
     return unsubscribe;
   }, []);
 
+
+  const usersRef = db.ref("users");
   const handleSignUp = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
+
+        user.updateProfile({
+          displayName: username,
+        });
+        return usersRef.child(username).set({
+          email: auth.currentUser.email,
+        });
+      })
+      .then(() => {
+        console.log("Data set");
       })
       .catch((error) => alert(error.message));
   };
@@ -58,6 +75,13 @@ const LoginScreen = () => {
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
           secureTextEntry
+        />
+
+        <TextInput
+          placeholder="Username"
+          value={username}
+          onChangeText={(text) => setUsername(text)}
+          style={styles.input}
         />
       </View>
 
