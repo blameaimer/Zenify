@@ -1,28 +1,14 @@
 import { StyleSheet, Text, TouchableOpacity, View, Alert } from "react-native";
 import { db, auth } from "../firebase";
-import { useState } from "react";
-const userName = auth.currentUser?.displayName;
-const usersRef = db.ref("users").child(userName).child("tasks");
+
 const TaskCard = ({ item, setTasks }) => {
   const deleteHandler = () => {
-    setTasks((prevTasks) => {
-      const newTasks = prevTasks.filter((el) => el.id != item.id);
-      return [...newTasks];
+    setTasks(() => {
+      const userName = auth.currentUser?.displayName;
+      const usersRef = db.ref("users").child(userName).child("tasks");
+      usersRef.child(item.key).remove();
     });
   };
-  const itemId = item.id;
-  usersRef.child(itemId).set({
-    task: item.task,
-  });
-  usersRef.once(
-    "value",
-    (snapshot) => {
-      console.log(snapshot.val());
-    },
-    (errorObject) => {
-      console.log("The readfailed: " + errorObject);
-    }
-  );
   const createDeleteAlert = () =>
     Alert.alert("Warning", "Are you sure you want to delete this?", [
       {
@@ -42,7 +28,7 @@ const TaskCard = ({ item, setTasks }) => {
   return (
     <View style={styles.item}>
       <TouchableOpacity>
-        <Text>{item.task}</Text>
+        <Text>{item.key}</Text>
       </TouchableOpacity>
       <TouchableOpacity>
         <Text onPress={createDeleteAlert}>Delete</Text>

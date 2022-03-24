@@ -1,35 +1,59 @@
-import { StyleSheet, SafeAreaView, View, FlatList, Text } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  FlatList,
+  Text,
+  ScrollView,
+} from "react-native";
 import AddTask from "../components/AddTask";
 import TaskCard from "../components/TaskCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
+import { db, auth } from "../firebase";
 
 export default function CreateTasksScreen() {
   const [tasks, setTasks] = useState([]);
 
+  useEffect(() => {
+    const userName = auth.currentUser?.displayName;
+    const taskRef = db.ref("users").child(userName).child("tasks");
+    const listener = taskRef.orderByChild("index").on(
+      "value",
+      (snapshot) => {
+        const fetchedTasks = [];
+        snapshot.forEach((task) => {
+          fetchedTasks.push(task);
+        });
+        setTasks(fetchedTasks);
+      },
+      (errorObject) => {
+        console.log("The readfailed: " + errorObject);
+      }
+    );
+    return () => taskRef.off("value", listener);
+  }, [db]);
+
   const addTask = (text) => {
-    setTasks((prevTodos) => {
-      return [{ task: text, id: uuidv4() }, ...prevTodos];
+    const userName = auth.currentUser?.displayName;
+    const taskRef = db.ref("users").child(userName).child("tasks");
+    taskRef.child(text).set({
+      index: tasks.length + 1,
+      id: uuidv4(),
+      key: text,
     });
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.tasksWrapper}>
-        <Text style={styles.title}>Tasklist</Text>
-        <View style={styles.content}>
-          <AddTask addTask={addTask} />
-          <View style={styles.list}>
-            <FlatList
-              data={tasks}
-              renderItem={({ item }) => (
-                <TaskCard setTasks={setTasks} item={item} />
-              )}
-            />
-          </View>
-        </View>
-      </View>
+      <Text style={styles.title}>Tasklist</Text>
+
+      <AddTask addTask={addTask} />
+      <FlatList
+        data={tasks}
+        renderItem={({ item }) => <TaskCard setTasks={setTasks} item={item} />}
+      />
     </SafeAreaView>
   );
 }
@@ -49,9 +73,6 @@ const styles = StyleSheet.create({
   content: {
     padding: 40,
     paddingHorizontal: 20,
-  },
-  list: {
-    marginTop: 30,
   },
   taskButton: {
     alignItems: "flex-end",
