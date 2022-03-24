@@ -1,37 +1,13 @@
 import { SafeAreaView, View, TouchableOpacity, StyleSheet } from "react-native";
-import { useState } from "react";
-import Break from "./Break";
-import Focus from "./Focus";
+import Session from "./Session";
 
 const Timer = () => {
-  const [isBreak, setIsBreak] = useState(false);
-  const [startFocus, setStartFocus] = useState(false);
-  const [startBreak, setStartBreak] = useState(false);
-  const [durationFocus, setDurationFocus] = useState(10);
-  const [durationBreak, setDurationBreak] = useState(5);
-
   return (
     <>
       <SafeAreaView style={styles.container}>
         <View>
           <TouchableOpacity>
-            {isBreak ? (
-              <Break
-                setDurationBreak={setDurationBreak}
-                durationBreak={durationBreak}
-                setStartBreak={setStartBreak}
-                startBreak={startBreak}
-                setIsBreak={setIsBreak}
-              />
-            ) : (
-              <Focus
-                setDurationFocus={setDurationFocus}
-                durationFocus={durationFocus}
-                startFocus={startFocus}
-                setStartFocus={setStartFocus}
-                setIsBreak={setIsBreak}
-              />
-            )}
+            <Session />
           </TouchableOpacity>
         </View>
       </SafeAreaView>

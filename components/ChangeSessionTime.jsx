@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { useState } from "react";
 
-export default function ChangeBreak({ setDurationBreak }) {
+export default function ChangeSessionTime({ durationOptions, setSessionData }) {
   const [showLength, setShowLength] = useState(false);
-  const minuteArr = ["break length", 5, 10, 15];
+
+  console.log(durationOptions);
 
   return (
     <>
@@ -19,10 +20,12 @@ export default function ChangeBreak({ setDurationBreak }) {
             <Picker
               onValueChange={(itemValue) => {
                 setShowLength(false);
-                setDurationBreak(itemValue * 60);
+                setSessionData((currentSession) => {
+                  return { ...currentSession, currentDuration: itemValue * 60 };
+                });
               }}
             >
-              {minuteArr.slice(1).map((number) => {
+              {durationOptions.map((number) => {
                 return (
                   <Picker.Item
                     label={`${number}`}
@@ -44,5 +47,6 @@ export default function ChangeBreak({ setDurationBreak }) {
 const styles = StyleSheet.create({
   changelength: {
     fontSize: 32,
+    textAlign: "center",
   },
 });
