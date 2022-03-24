@@ -46,7 +46,7 @@ const audioBookPlaylist = [
   },
 ];
 
-export default class TrackPlayer extends React.Component {
+export default class Trackplayer extends React.Component {
   state = {
     isPlaying: false,
     playbackInstance: null,
