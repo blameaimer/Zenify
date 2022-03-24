@@ -11,13 +11,11 @@ import {
 
 import { auth, db } from "../firebase";
 
-
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [username, setUsername] = useState("");
-
 
   const navigation = useNavigation();
 
@@ -29,7 +27,6 @@ const LoginScreen = () => {
     });
     return unsubscribe;
   }, []);
-
 
   const usersRef = db.ref("users");
   const handleSignUp = () => {
