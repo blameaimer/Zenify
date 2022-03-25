@@ -1,8 +1,8 @@
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import { View, Text, TouchableOpacity } from "react-native";
-import { useState } from "react";
 import ChangeSessionTime from "./ChangeSessionTime";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { sendNotification } from "../utils/notifications.js";
 
 export default function Session() {
   const focusSessionData = {
@@ -20,9 +20,13 @@ export default function Session() {
   const [sessionData, setSessionData] = useState(focusSessionData);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const handleCompletion = () => {
+  const handleCompletion = async () => {
     setIsPlaying(false);
     setIsBreak((isBreak) => !isBreak);
+    await sendNotification(
+      `${sessionData.title} session over`,
+      "You're doing great!"
+    );
   };
 
   useEffect(() => {
