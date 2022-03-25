@@ -1,7 +1,6 @@
 // Import the functions you need from the SDKs you need
 
 import * as firebase from "firebase";
-
 // TODO: Add SDKs for Firebase products that you want to use
 
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -11,19 +10,22 @@ import * as firebase from "firebase";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCZdlcajfbxIQ4rglcpYQmPYB_5oKp7eiw",
+  apiKey: "AIzaSyCwDfhxQfq4MRYSarg1kYB5GZilE6Y0tcM",
 
-  authDomain: "zenify-22.firebaseapp.com",
+  authDomain: "zenify-dev.firebaseapp.com",
 
-  projectId: "zenify-22",
+  databaseURL:
+    "https://zenify-dev-default-rtdb.europe-west1.firebasedatabase.app",
 
-  storageBucket: "zenify-22.appspot.com",
+  projectId: "zenify-dev",
 
-  messagingSenderId: "791090610440",
+  storageBucket: "zenify-dev.appspot.com",
 
-  appId: "1:791090610440:web:d878a4a5141c7f5027ecbd",
+  messagingSenderId: "542241122959",
 
-  measurementId: "G-4D7K3HE56Q",
+  appId: "1:542241122959:web:69f726accc5eabbc755efa",
+
+  measurementId: "G-8RNZXP35TY",
 };
 
 // Initialize Firebase
@@ -37,4 +39,6 @@ if (firebase.apps.length === 0) {
 
 const auth = firebase.auth();
 
-export { auth };
+const db = firebase.database();
+
+export { auth, db };
