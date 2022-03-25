@@ -1,5 +1,5 @@
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import ChangeSessionTime from "./ChangeSessionTime";
 import { useEffect, useState } from "react";
 import { sendNotification } from "../utils/notifications.js";
@@ -31,11 +31,10 @@ export default function Session() {
 
   useEffect(() => {
     setSessionData(() => (isBreak ? breakSessionData : focusSessionData));
-    console.log(sessionData.currentDuration, "<<< current duration");
   }, [isBreak]);
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text>{sessionData.title}</Text>
       <ChangeSessionTime
         durationOptions={sessionData.durationOptions}
@@ -66,3 +65,15 @@ export default function Session() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    height: "50%",
+    backgroundColor: "dodgerblue",
+  },
+  button: {},
+});
