@@ -5,8 +5,6 @@ import { Picker } from "@react-native-picker/picker";
 export default function ChangeSessionTime({ durationOptions, setSessionData }) {
   const [showLength, setShowLength] = useState(false);
 
-  console.log(durationOptions);
-
   return (
     <>
       <View>
@@ -16,29 +14,29 @@ export default function ChangeSessionTime({ durationOptions, setSessionData }) {
           }
         >
           <Text style={styles.changelength}>Set Length</Text>
-          {showLength ? (
-            <Picker
-              onValueChange={(itemValue) => {
-                setShowLength(false);
-                setSessionData((currentSession) => {
-                  return { ...currentSession, currentDuration: itemValue * 60 };
-                });
-              }}
-            >
-              {durationOptions.map((number) => {
-                return (
-                  <Picker.Item
-                    label={`${number}`}
-                    value={`${number}`}
-                    key={`${number}`}
-                  ></Picker.Item>
-                );
-              })}
-            </Picker>
-          ) : (
-            <Text></Text>
-          )}
         </TouchableOpacity>
+        {showLength ? (
+          <Picker
+            onValueChange={(itemValue) => {
+              setShowLength(false);
+              setSessionData((currentSession) => {
+                return { ...currentSession, currentDuration: itemValue * 60 };
+              });
+            }}
+          >
+            {durationOptions.map((number) => {
+              return (
+                <Picker.Item
+                  label={`${number}`}
+                  value={`${number}`}
+                  key={`${number}`}
+                ></Picker.Item>
+              );
+            })}
+          </Picker>
+        ) : (
+          <Text></Text>
+        )}
       </View>
     </>
   );
