@@ -40,27 +40,24 @@ export default function Session() {
         durationOptions={sessionData.durationOptions}
         setSessionData={setSessionData}
       />
-      <TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setIsPlaying((isPlaying) => !isPlaying)}
-        >
-          <CountdownCircleTimer
-            key={sessionData.currentDuration}
-            isPlaying={isPlaying}
-            duration={sessionData.currentDuration}
-            colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-            colorsTime={[7, 5, 2, 0]}
-            onComplete={handleCompletion}
-          >
-            {({ remainingTime }) => {
-              const minutes = Math.floor(remainingTime / 60);
-              const seconds = remainingTime % 60;
-              const paddedSeconds = String(seconds).padStart(2, "0");
 
-              return <Text>{`${minutes}:${paddedSeconds}`}</Text>;
-            }}
-          </CountdownCircleTimer>
-        </TouchableOpacity>
+      <TouchableOpacity onPress={() => setIsPlaying((isPlaying) => !isPlaying)}>
+        <CountdownCircleTimer
+          key={sessionData.currentDuration}
+          isPlaying={isPlaying}
+          duration={sessionData.currentDuration}
+          colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+          colorsTime={[7, 5, 2, 0]}
+          onComplete={handleCompletion}
+        >
+          {({ remainingTime }) => {
+            const minutes = Math.floor(remainingTime / 60);
+            const seconds = remainingTime % 60;
+            const paddedSeconds = String(seconds).padStart(2, "0");
+
+            return <Text>{`${minutes}:${paddedSeconds}`}</Text>;
+          }}
+        </CountdownCircleTimer>
       </TouchableOpacity>
     </View>
   );
