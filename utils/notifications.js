@@ -8,22 +8,23 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export async function sendNotification(sessionTitle, bodyContent) {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: sessionTitle,
-      body: bodyContent,
-      //   data: { data: "goes here" },
-    },
-    trigger: null,
-  });
+let sessionNotificationId;
+
+export async function handleSessionNotification(isPlaying, content) {
+  if (isPlaying) {
+    await Notifications.cancelScheduledNotificationAsync(sessionNotificationId);
+  } else {
+    sendNotification(content);
+  }
 }
 
-if (Platform.OS === "android") {
-  Notifications.setNotificationChannelAsync("default", {
-    name: "default",
-    importance: Notifications.AndroidImportance.MAX,
-    vibrationPattern: [0, 250, 250, 250],
-    lightColor: "#FF231F7C",
+async function sendNotification(content) {
+  const { remainingTime, title, body } = content;
+  sessionNotificationId = await Notifications.scheduleNotificationAsync({
+    content: {
+      title: title,
+      body: body,
+    },
+    trigger: { seconds: remainingTime },
   });
 }
