@@ -9,6 +9,9 @@ import Stats from "./Stats";
 import Setting from "./Setting";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Session from "../components/Session";
+
+import DisplayStats from "../components/DisplayStats";
+
 const Tab = createMaterialBottomTabNavigator();
 
 export default function Home() {
@@ -51,7 +54,11 @@ export default function Home() {
       />
       <Tab.Screen
         name="Stats"
+
+        component={DisplayStats}
+
         component={Stats}
+
         options={{
           tabBarLabel: "Stats",
           tabBarIcon: ({ color }) => (
