@@ -10,28 +10,39 @@ import {
 } from "react-native";
 import ChangeSessionTime from "./ChangeSessionTime";
 import { useEffect, useState } from "react";
-import { sendNotification } from "../utils/notifications.js";
+import { handleSessionNotification } from "../utils/notifications.js";
 
 export default function Session() {
   const focusSessionData = {
     title: "Focus",
     currentDuration: 10,
-    durationOptions: ["", 20, 25, 30, 35, 40, 45],
+    durationOptions: ["", 0.08, 20, 25, 30, 35, 40, 45],
   };
   const breakSessionData = {
     title: "Break",
     currentDuration: 20,
-    durationOptions: ["", 5, 10, 15],
+    durationOptions: ["", 0.08, 5, 10, 15],
   };
 
   const [isBreak, setIsBreak] = useState(false);
   const [sessionData, setSessionData] = useState(focusSessionData);
   const [isPlaying, setIsPlaying] = useState(false);
+
   const [modalVisible, setModalVisible] = useState(false);
+
+  const [remainingTime, setRemainingTime] = useState(
+    sessionData.currentDuration
+  );
+
+  useEffect(() => {
+    setSessionData(() => (isBreak ? breakSessionData : focusSessionData));
+  }, [isBreak]);
+
 
   const handleCompletion = async () => {
     setModalVisible(true);
     setIsPlaying(false);
+
 
     await sendNotification(
       `${sessionData.title} session over`,
@@ -41,6 +52,21 @@ export default function Session() {
   useEffect(() => {
     setSessionData(() => (isBreak ? breakSessionData : focusSessionData));
   }, [isBreak]);
+
+    setIsBreak(!isBreak);
+  };
+
+  const notificationContent = {
+    remainingTime: remainingTime,
+    title: `${sessionData.title} session over`,
+    body: "You're doing great!",
+  };
+
+  const handlePress = async () => {
+    await handleSessionNotification(isPlaying, notificationContent);
+    setIsPlaying(!isPlaying);
+  };
+
 
   return (
     <View style={styles.container}>
@@ -121,7 +147,7 @@ export default function Session() {
         </Modal>
       </View>
 
-      <TouchableOpacity onPress={() => setIsPlaying((isPlaying) => !isPlaying)}>
+      <TouchableOpacity onPress={handlePress}>
         <CountdownCircleTimer
           key={sessionData.currentDuration}
           isPlaying={isPlaying}
@@ -130,6 +156,7 @@ export default function Session() {
           rotation={"counterclockwise"}
           colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
           colorsTime={[7, 5, 2, 0]}
+          onUpdate={(remainingTime) => setRemainingTime(remainingTime)}
           onComplete={handleCompletion}
         >
           {({ remainingTime }) => {
