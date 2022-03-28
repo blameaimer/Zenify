@@ -11,6 +11,7 @@ import {
   Image,
 } from "react-native";
 import SwitchSelector from "react-native-switch-selector";
+import Unguided from "../components/Unguided";
 import { trackContext } from "../utils/contexts";
 
 const ListItem = ({ item }) => {
@@ -47,7 +48,7 @@ function Meditation({ navigation }) {
           // buttonMargin={10}
           options={[
             { label: "Guided", value: 0 },
-            { label: "Unguided", value: 1 }, 
+            { label: "Unguided", value: 1 },
           ]}
         />
       </View>
@@ -68,9 +69,8 @@ function Meditation({ navigation }) {
                       renderItem={({ item }) => (
                         <TouchableOpacity
                           onPress={() => {
-                            setCurrentIndex(item.key-1),
-                              navigation.navigate("TrackPlayer")
-                              
+                            setCurrentIndex(item.key - 1),
+                              navigation.navigate("TrackPlayer");
                           }}
                         >
                           <ListItem item={item} />
@@ -91,16 +91,7 @@ function Meditation({ navigation }) {
             />
           </SafeAreaView>
         ) : (
-          // <View>
-          //   {/* <TouchableOpacity
-          //     onPress={() => navigation.navigate("TrackPlayer")}
-          //   >
-          //     <Text>body1</Text>
-          //   </TouchableOpacity> */}
-          // </View>
-          <View>
-            <Text>body2</Text>
-          </View>
+ <Unguided />
         )}
       </View>
     </View>
