@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
-import Focus from "../Screens/Focus";
 
 const DisplayStats = () => {
   const [FocusSessions, setFocusSessions] = useState([]);

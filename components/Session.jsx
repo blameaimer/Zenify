@@ -1,11 +1,6 @@
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
-
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { useState } from "react";
 import ChangeSessionTime from "./ChangeSessionTime";
-import { useEffect } from "react";
 import { db, auth } from "../firebase";
-
 import {
   View,
   Text,
@@ -15,10 +10,8 @@ import {
   Modal,
   Pressable,
 } from "react-native";
-import ChangeSessionTime from "./ChangeSessionTime";
 import { useEffect, useState } from "react";
 import { handleSessionNotification } from "../utils/notifications.js";
-
 
 export default function Session() {
   const focusSessionData = {
@@ -32,7 +25,6 @@ export default function Session() {
     currentDuration: 20,
 
     durationOptions: ["", 0.08, 5, 10, 15],
-
   };
 
   const [isBreak, setIsBreak] = useState(false);
@@ -40,7 +32,10 @@ export default function Session() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [reaminTime, setRemainTime] = useState(0);
   const [counterData, setCounter] = useState(0);
-
+  const [modalVisible, setModalVisible] = useState(false);
+  const [remainingTime, setRemainingTime] = useState(
+    sessionData.currentDuration
+  );
   let sessionTime = sessionData.currentDuration - reaminTime;
 
   useEffect(() => {
@@ -66,8 +61,9 @@ export default function Session() {
   }, [db]);
 
   const handleCompletion = () => {
+    setModalVisible(true);
     setIsPlaying(false);
-    setIsBreak((isBreak) => !isBreak);
+    setIsPlaying(false);
     const userName = auth.currentUser?.displayName;
     const SessionRef = db
       .ref("users")
@@ -80,36 +76,9 @@ export default function Session() {
     });
   };
 
-=======
-
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const [remainingTime, setRemainingTime] = useState(
-    sessionData.currentDuration
-  );
-
   useEffect(() => {
     setSessionData(() => (isBreak ? breakSessionData : focusSessionData));
   }, [isBreak]);
-
-
-  const handleCompletion = async () => {
-    setModalVisible(true);
-    setIsPlaying(false);
-
-
-    await sendNotification(
-      `${sessionData.title} session over`,
-      "You're doing great!"
-    );
-  };
-
-  useEffect(() => {
-    setSessionData(() => (isBreak ? breakSessionData : focusSessionData));
-  }, [isBreak]);
-
-    setIsBreak(!isBreak);
-  };
 
   const notificationContent = {
     remainingTime: remainingTime,
@@ -122,7 +91,6 @@ export default function Session() {
     setIsPlaying(!isPlaying);
   };
 
-
   return (
     <View style={styles.container}>
       <Text>{sessionData.title}</Text>
@@ -130,9 +98,6 @@ export default function Session() {
         durationOptions={sessionData.durationOptions}
         setSessionData={setSessionData}
       />
-
-
-      <TouchableOpacity onPress={() => setIsPlaying((isPlaying) => !isPlaying)}>
 
       <View style={styles.centeredView}>
         <Modal
@@ -207,7 +172,6 @@ export default function Session() {
       </View>
 
       <TouchableOpacity onPress={handlePress}>
-
         <CountdownCircleTimer
           key={sessionData.currentDuration}
           isPlaying={isPlaying}
@@ -279,5 +243,4 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "center",
   },
-
 });
