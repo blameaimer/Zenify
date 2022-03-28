@@ -22,7 +22,7 @@ const AddTask = (props) => {
         title="add task"
         color="blue"
         onPress={() => {
-          addTask(inputText)
+          addTask(inputText);
           setInputText("");
         }}
       />

@@ -1,20 +1,14 @@
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Alert,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Alert } from "react-native";
+import { db, auth } from "../firebase";
 
 const TaskCard = ({ item, setTasks }) => {
   const deleteHandler = () => {
-    setTasks((prevTasks) => {
-      console.log(prevTasks);
-      const newTasks = prevTasks.filter((el) => el.id != item.id);
-      return [...newTasks];
+    setTasks(() => {
+      const userName = auth.currentUser?.displayName;
+      const usersRef = db.ref("users").child(userName).child("tasks");
+      usersRef.child(item.key).remove();
     });
   };
-
   const createDeleteAlert = () =>
     Alert.alert("Warning", "Are you sure you want to delete this?", [
       {
@@ -34,7 +28,7 @@ const TaskCard = ({ item, setTasks }) => {
   return (
     <View style={styles.item}>
       <TouchableOpacity>
-        <Text>{item.task}</Text>
+        <Text>{item.key}</Text>
       </TouchableOpacity>
       <TouchableOpacity>
         <Text onPress={createDeleteAlert}>Delete</Text>
@@ -57,5 +51,5 @@ const styles = StyleSheet.create({
 });
 
 // fade affect onpress for addin task,
-// pop up text pad 
-//signout to be in the nav top left, 
+// pop up text pad
+//signout to be in the nav top left,
