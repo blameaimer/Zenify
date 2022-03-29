@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  SafeAreaView,
-  View,
-  FlatList,
-  Text,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, SafeAreaView, FlatList, Text, View } from "react-native";
 import AddTask from "../components/AddTask";
 import TaskCard from "../components/TaskCard";
 import { useState, useEffect } from "react";
@@ -44,12 +37,12 @@ export default function CreateTasksScreen() {
       key: text,
     });
   };
-
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Tasklist</Text>
+      <Text style={styles.title}>All Tasks</Text>
 
       <AddTask addTask={addTask} />
+
       <FlatList
         data={tasks}
         renderItem={({ item }) => <TaskCard setTasks={setTasks} item={item} />}
@@ -62,13 +55,15 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#121212",
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
     paddingLeft: 20,
     paddingTop: 20,
+    fontWeight: "700",
+    color: "#8899A6",
   },
   content: {
     padding: 40,
@@ -76,5 +71,18 @@ const styles = StyleSheet.create({
   },
   taskButton: {
     alignItems: "flex-end",
+  },
+  button: {
+    backgroundColor: "#0782F9",
+    width: "60%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 40,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
   },
 });

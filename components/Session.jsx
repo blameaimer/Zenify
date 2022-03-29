@@ -1,6 +1,7 @@
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import ChangeSessionTime from "./ChangeSessionTime";
 import { db, auth } from "../firebase";
+import { BlurView } from "expo-blur";
 import {
   View,
   Text,
@@ -99,7 +100,7 @@ export default function Session() {
         setSessionData={setSessionData}
       />
 
-      <View style={styles.centeredView}>
+      <BlurView intensity={20} tint="dark" style={styles.centeredView}>
         <Modal
           animationType="slide"
           transparent={true}
@@ -169,7 +170,7 @@ export default function Session() {
             </View>
           </View>
         </Modal>
-      </View>
+      </BlurView>
 
       <TouchableOpacity onPress={handlePress}>
         <CountdownCircleTimer
