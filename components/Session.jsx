@@ -1,43 +1,40 @@
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import ChangeSessionTime from "./ChangeSessionTime";
 import { db, auth } from "../firebase";
-import { BlurView } from "expo-blur";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-  Modal,
-  Pressable,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
 import { handleSessionNotification } from "../utils/notifications.js";
+import SessionModal from "./SessionModal";
 
 export default function Session() {
   const focusSessionData = {
     title: "Focus",
     currentDuration: 10,
-
     durationOptions: ["", 0.08, 20, 25, 30, 35, 40, 45],
   };
   const breakSessionData = {
     title: "Break",
     currentDuration: 20,
-
     durationOptions: ["", 0.08, 5, 10, 15],
   };
 
   const [isBreak, setIsBreak] = useState(false);
   const [sessionData, setSessionData] = useState(focusSessionData);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [reaminTime, setRemainTime] = useState(0);
   const [counterData, setCounter] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+  const [key, setKey] = useState(0);
   const [remainingTime, setRemainingTime] = useState(
     sessionData.currentDuration
   );
-  let sessionTime = sessionData.currentDuration - reaminTime;
+
+  useEffect(() => {
+    setKey((prevKey) => prevKey + 1);
+  }, [sessionData]);
+
+  useEffect(() => {
+    setSessionData(() => (isBreak ? breakSessionData : focusSessionData));
+  }, [isBreak]);
 
   useEffect(() => {
     const userName = auth.currentUser?.displayName;
@@ -50,7 +47,7 @@ export default function Session() {
       (snapshot) => {
         const fetchedSessions = [];
         snapshot.forEach((session) => {
-          fetchedSessions.push(session);
+          fetchedSessions.push(session.val());
         });
         setCounter(fetchedSessions.length);
       },
@@ -64,7 +61,6 @@ export default function Session() {
   const handleCompletion = () => {
     setModalVisible(true);
     setIsPlaying(false);
-    setIsPlaying(false);
     const userName = auth.currentUser?.displayName;
     const SessionRef = db
       .ref("users")
@@ -73,13 +69,9 @@ export default function Session() {
 
     SessionRef.child(counterData).set({
       sessionNo: counterData,
-      time: sessionTime + 1,
+      time: sessionData.currentDuration,
     });
   };
-
-  useEffect(() => {
-    setSessionData(() => (isBreak ? breakSessionData : focusSessionData));
-  }, [isBreak]);
 
   const notificationContent = {
     remainingTime: remainingTime,
@@ -94,104 +86,49 @@ export default function Session() {
 
   return (
     <View style={styles.container}>
-      <Text>{sessionData.title}</Text>
       <ChangeSessionTime
         durationOptions={sessionData.durationOptions}
         setSessionData={setSessionData}
       />
-
-      <BlurView intensity={20} tint="dark" style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>
-                {isBreak ? "Get Back to Work!" : "Time for a Break!"}
-              </Text>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => {
-                  setIsBreak((isBreak) => !isBreak);
-                  setIsPlaying(true);
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                <Text style={styles.textStyle}>
-                  {isBreak ? "Start Focus" : "Start Break"}
-                </Text>
-              </Pressable>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => {
-                  setSessionData((currentSession) => {
-                    return { ...currentSession, currentDuration: 5 };
-                  });
-
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                <Text style={styles.textStyle}>+5 min</Text>
-              </Pressable>
-
-              {isBreak ? (
-                <Text></Text>
-              ) : (
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => {
-                    setSessionData((currentSession) => {
-                      return { ...currentSession, currentDuration: 5 * 60 };
-                    });
-
-                    setModalVisible(!modalVisible);
-                  }}
-                >
-                  <Text style={styles.textStyle}>Skip Break</Text>
-                </Pressable>
-              )}
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => {
-                  setIsBreak((isBreak) => !isBreak);
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                <Text style={styles.textStyle}>
-                  {isBreak ? "Finish Break" : "Finish Session"}
-                </Text>
-              </Pressable>
-            </View>
-          </View>
-        </Modal>
-      </BlurView>
+      <SessionModal
+        isBreak={isBreak}
+        setIsBreak={setIsBreak}
+        setIsPlaying={setIsPlaying}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        setSessionData={setSessionData}
+        setKey={setKey}
+      />
 
       <TouchableOpacity onPress={handlePress}>
         <CountdownCircleTimer
-          key={sessionData.currentDuration}
+          style={styles.circle}
+          size={300}
+          key={key}
           isPlaying={isPlaying}
           duration={sessionData.currentDuration}
-          trailColor={"blue"}
-          rotation={"counterclockwise"}
+          trailColor={"#22303c"}
           onUpdate={(remainingTime) => setRemainingTime(remainingTime)}
-          colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+          colors={["#015489", "#008bbe", "#06aac3", "#A30000"]}
           colorsTime={[7, 5, 2, 0]}
           onComplete={handleCompletion}
         >
           {({ remainingTime }) => {
-            setRemainTime(() => remainingTime);
-
             const minutes = Math.floor(remainingTime / 60);
             const seconds = remainingTime % 60;
             const paddedSeconds = String(seconds).padStart(2, "0");
 
-            return <Text>{`${minutes}:${paddedSeconds}`}</Text>;
+            return (
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "white",
+                  fontSize: 40,
+                  fontWeight: "bold",
+                  marginTop: 5,
+                }}
+              >{`${minutes}:${paddedSeconds} \n ${sessionData.title}`}</Text>
+            );
           }}
         </CountdownCircleTimer>
       </TouchableOpacity>
@@ -203,45 +140,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    height: "50%",
-    backgroundColor: "dodgerblue",
+    justifyContent: "space-between",
+    paddingBottom: 30,
+    backgroundColor: "#181818",
   },
-  button: {},
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
-  },
+  changeLength: { color: "white", fontSize: 40, fontWeight: "bold" },
 });
