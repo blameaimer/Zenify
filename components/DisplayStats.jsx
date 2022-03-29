@@ -55,26 +55,40 @@ const DisplayStats = () => {
   BreakSessions.forEach((session) => {
     TotalBreakTime += session.time;
   });
-
+  const Focusminutes = Math.floor(TotalWorkTime / 60);
+  const Focusseconds = Math.ceil(TotalWorkTime % 60);
+  const Breakminutes = Math.floor(TotalBreakTime / 60);
+  const Breakseconds = Math.ceil(TotalBreakTime % 60);
+  // ${minutes}:${paddedSeconds}
   return (
     <View style={styles.container}>
       <View></View>
       <View></View>
-      <View></View>
+      <View style={styles.circle}>
+        <Text style={styles.circlenumber}>{FocusCount}</Text>
+      </View>
       <View style={styles.sessions}>
         <View style={styles.top}>
           <View style={styles.infobox}>
-            <Text style={styles.text}>Focus Sessions Work Time</Text>
-            <Text style={styles.text}>
-              {FocusCount} {TotalWorkTime}
+            <Text style={styles.text}>Focus Sessions</Text>
+            <Text style={styles.number}>{FocusCount}</Text>
+          </View>
+          <View style={styles.infobox}>
+            <Text style={styles.text}>Work Time</Text>
+            <Text style={styles.number}>
+              {Focusminutes + "m " + Focusseconds + "s"}
             </Text>
           </View>
         </View>
         <View style={styles.bottom}>
           <View style={styles.infobox}>
-            <Text style={styles.text}>Breaks Break Time </Text>
-            <Text style={styles.text}>
-              {BreakCount} {TotalBreakTime}
+            <Text style={styles.text}>Breaks </Text>
+            <Text style={styles.number}>{BreakCount}</Text>
+          </View>
+          <View style={styles.infobox}>
+            <Text style={styles.text}>Break Time </Text>
+            <Text style={styles.number}>
+              {Breakminutes + "m " + Breakseconds + "s"}
             </Text>
           </View>
         </View>
@@ -92,23 +106,57 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
-    backgroundColor: "#181818",
+    backgroundColor: "#121212",
+  },
+
+  circle: {
+    marginTop: 40,
+    backgroundColor: "#282828",
+    borderColor: "dodgerblue",
+    borderRadius: 200,
+    height: 200,
+    width: 200,
+    position: "relative",
+    alignSelf: "center",
+    padding: 15,
+    justifyContent: "center",
+  },
+  circlenumber: {
+    alignSelf: "center",
+    fontSize: 55,
+    color: "#b3b3b3",
   },
   text: {
-    fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 14,
     color: "dodgerblue",
   },
+  number: {
+    fontWeight: "bold",
+    fontSize: 20,
+    color: "white",
+  },
   sessions: {
-    width: "100%",
+    width: "90%",
+    padding: 15,
+    alignSelf: "flex-end",
+    backgroundColor: "#181818",
+    position: "absolute",
+    borderRadius: 15,
   },
   infobox: {},
   top: {
-    backgroundColor: "black",
+    justifyContent: "space-between",
+    paddingRight: 7,
     flexDirection: "row",
   },
   bottom: {
-    backgroundColor: "pink",
+    justifyContent: "space-between",
+
     flexDirection: "row",
+  },
+  chair: {
+    alignSelf: "flex-end",
+    padding: 15,
+    height: 10,
   },
 });
