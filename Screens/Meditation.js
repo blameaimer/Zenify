@@ -11,6 +11,7 @@ import {
   Image,
 } from "react-native";
 import SwitchSelector from "react-native-switch-selector";
+import Unguided from "../components/Unguided";
 import { trackContext } from "../utils/contexts";
 
 const ListItem = ({ item }) => {
@@ -47,7 +48,7 @@ function Meditation({ navigation }) {
           // buttonMargin={10}
           options={[
             { label: "Guided", value: 0 },
-            { label: "Unguided", value: 1 }, 
+            { label: "Unguided", value: 1 },
           ]}
         />
       </View>
@@ -68,13 +69,11 @@ function Meditation({ navigation }) {
                       renderItem={({ item }) => (
                         <TouchableOpacity
                           onPress={() => {
-                            setCurrentIndex(item.key-1),
-                              navigation.navigate("TrackPlayer")
-                              
+                            setCurrentIndex(item.key - 1),
+                              navigation.navigate("TrackPlayer");
                           }}
                         >
                           <ListItem item={item} />
-                          {console.log(currentNum)}
                         </TouchableOpacity>
                       )}
                       showsHorizontalScrollIndicator={false}
@@ -91,16 +90,7 @@ function Meditation({ navigation }) {
             />
           </SafeAreaView>
         ) : (
-          // <View>
-          //   {/* <TouchableOpacity
-          //     onPress={() => navigation.navigate("TrackPlayer")}
-          //   >
-          //     <Text>body1</Text>
-          //   </TouchableOpacity> */}
-          // </View>
-          <View>
-            <Text>body2</Text>
-          </View>
+ <Unguided />
         )}
       </View>
     </View>
@@ -125,18 +115,18 @@ const SECTIONS = [
 
       {
         key: "3",
-        text: "Item text 3",
-        uri: "https://picsum.photos/id/1002/200",
+        text: "Wonderful Happiness",
+        uri: "https://wallpaperboat.com/wp-content/uploads/2019/08/Firewatch-Wallpaper-For-Your-Iphone-1280-1024.jpg",
       },
       {
         key: "4",
-        text: "Item text 4",
-        uri: "https://picsum.photos/id/1006/200",
+        text: "Thinking",
+        uri: "https://wallpapercave.com/wp/wp6827255.jpg",
       },
       {
         key: "5",
-        text: "Item text 5",
-        uri: "https://picsum.photos/id/1008/200",
+        text: "Receptive Mindfulness",
+        uri: "https://c4.wallpaperflare.com/wallpaper/772/265/137/2d-flat-nature-mountain-top-hd-wallpaper-preview.jpg",
       },
     ],
   },
@@ -146,61 +136,61 @@ const SECTIONS = [
     data: [
       {
         key: "6",
-        text: "Item text 1",
+        text: "Balanced Mindfulness",
         uri: "https://media.idownloadblog.com/wp-content/uploads/2020/10/iOS-14.2-wallpaper-LAke-The-Beach-Light-Mode.jpg",
       },
       {
         key: "7",
-        text: "Item text 2",
+        text: "Body Supports Mind",
         uri: "https://9to5mac.com/?attachment_id=674265",
       },
 
       {
         key: "8",
-        text: "Item text 3",
+        text: "Impermanence",
         uri: "https://media.idownloadblog.com/wp-content/uploads/2020/10/iOS-14.2-wallpaper-LAke-The-Cliff-Light-Mode.jpg",
       },
       {
         key: "9",
-        text: "Item text 4",
+        text: "Wandering Talk",
         uri: "https://9to5mac.com/wp-content/uploads/sites/6/2020/10/1811.Lake_The_Desert_Day-375w-812h@3xiphone.png",
       },
       {
-        key: "5",
-        text: "Item text 5",
-        uri: "https://picsum.photos/id/1016/200",
+        key: "10",
+        text: "Calm Recognition",
+        uri: "https://9to5mac.com/wp-content/uploads/sites/6/2020/10/1822.Lake_The_Beach_Night-375w-812h@3xiphone.png",
       },
     ],
   },
   {
-    title: "Based on your recent listening",
+    title: "Guided Breathing",
     horizontal: true,
     data: [
       {
-        key: "1",
-        text: "Item text 1",
-        uri: "https://picsum.photos/id/1020/200",
+        key: "11",
+        text: "Intro",
+        uri: "https://wallpx.com/image/2021/06/bird-windmill-boat-moon-flat-landscape.jpg",
       },
       {
-        key: "2",
-        text: "Item text 2",
-        uri: "https://picsum.photos/id/1024/200",
+        key: "12",
+        text: "Clear Recognition",
+        uri: "https://wallpaper.dog/large/5556683.jpg",
       },
 
       {
-        key: "3",
-        text: "Item text 3",
-        uri: "https://picsum.photos/id/1027/200",
+        key: "13",
+        text: "Respect",
+        uri: "https://cdn.wallpapersafari.com/58/70/jLB7Zb.png",
       },
       {
-        key: "4",
-        text: "Item text 4",
-        uri: "https://picsum.photos/id/1035/200",
+        key: "14",
+        text: "Restoring Wholeness",
+        uri: "https://cdn.wallpapersafari.com/99/72/b1m2yM.jpg",
       },
       {
-        key: "5",
-        text: "Item text 5",
-        uri: "https://picsum.photos/id/1038/200",
+        key: "15",
+        text: "Release is Peace",
+        uri: "https://wallpaperforu.com/wp-content/uploads/2020/05/vector_wallpaper_190520232191350x2400.jpg",
       },
     ],
   },

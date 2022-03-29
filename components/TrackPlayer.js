@@ -30,28 +30,107 @@ const audioBookPlaylist = [
       "https://wallpaperaccess.com/full/1725723.jpg",
   },
   {
-    title: "Hamlet - Act III",
-    author: "William Shakespeare",
-    source: "Librivox",
-    uri: "http://www.archive.org/download/hamlet_0911_librivox/hamlet_act3_shakespeare.mp3",
+    title: "Wonderful Happiness",
+    author: "Fransico Morillo Gable",
+    source: "audio dharma",
+    uri: "https://www.audiodharma.org/talks/13845/download",
     imageSource:
-      "http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg",
+      "https://wallpaperboat.com/wp-content/uploads/2019/08/Firewatch-Wallpaper-For-Your-Iphone-1280-1024.jpg",
   },
   {
-    title: "Hamlet - Act IV",
-    author: "William Shakespeare",
-    source: "Librivox",
-    uri: "https://ia800204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act4_shakespeare.mp3",
+    title: "Mindfulness of Thinking",
+    author: "Ines Freedman",
+    source: "audio dharma",
+    uri: "https://www.audiodharma.org/talks/1777/download",
     imageSource:
-      "http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg",
+      "https://wallpapercave.com/wp/wp6827255.jpg",
   },
   {
-    title: "Guided Meditation on the Breath",
+    title: "Receptive Mindfulness",
+    author: "Andrea Fella",
+    source: "audio dharma",
+    uri: "https://www.audiodharma.org/talks/14876/download",
+    imageSource:
+      "https://c4.wallpaperflare.com/wallpaper/772/265/137/2d-flat-nature-mountain-top-hd-wallpaper-preview.jpg",
+  },
+    {
+    title: "Guided Meditation: Balancing Through Mindfulness",
+    author: "Kim Allen",
+    source: "audio dharma",
+    uri: "https://www.audiodharma.org/talks/15274/download",
+    imageSource:
+    "https://media.idownloadblog.com/wp-content/uploads/2020/10/iOS-14.2-wallpaper-LAke-The-Beach-Light-Mode.jpg",
+  },
+  {
+    title: "The Body Supports the Mind",
+    author: "Kim Allen",
+    source: "audio dharma",
+    uri: "https://www.audiodharma.org/talks/15271/download",
+    imageSource:
+      "https://9to5mac.com/?attachment_id=674265",
+  },
+  {
+    title: "Impermanence",
+    author: "Kim Allen",
+    source: "audio dharma",
+    uri: "https://www.audiodharma.org/talks/15270/download",
+    imageSource:
+      "https://media.idownloadblog.com/wp-content/uploads/2020/10/iOS-14.2-wallpaper-LAke-The-Cliff-Light-Mode.jpg",
+  },
+  {
+    title: "Investigation of Wandering Talk",
+    author: "Kim Allen",
+    source: "audio dharma",
+    uri: "https://www.audiodharma.org/talks/15265/download",
+    imageSource:
+      "https://9to5mac.com/wp-content/uploads/sites/6/2020/10/1811.Lake_The_Desert_Day-375w-812h@3xiphone.png",
+  },
+  {
+    title: "Calm Recognition",
     author: "Gil Fronsdal",
     source: "audio dharma",
-    uri: "https://www.audiodharma.org/talks/8/download",
+    uri: "https://www.audiodharma.org/talks/15247/download",
     imageSource:
-      "http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg",
+      "https://9to5mac.com/wp-content/uploads/sites/6/2020/10/1822.Lake_The_Beach_Night-375w-812h@3xiphone.png",
+  },{
+    title: "Intro into Mindfulness",
+    author: "Gil Fronsdal",
+    source: "audio dharma",
+    uri: "https://www.audiodharma.org/talks/14355/download",
+    imageSource:
+    "https://wallpx.com/image/2021/06/bird-windmill-boat-moon-flat-landscape.jpg",
+  },
+  {
+    title: "Clear Recognition of Breathing",
+    author: "Gil Fronsdal",
+    source: "audio dharma",
+    uri: "https://www.audiodharma.org/talks/14359/download",
+    imageSource:
+      "https://wallpaper.dog/large/5556683.jpg",
+  },
+  {
+    title: "Respect for Breathing",
+    author: "Gil Fronsdal",
+    source: "audio dharma",
+    uri: "https://www.audiodharma.org/talks/14363/download",
+    imageSource:
+      "https://cdn.wallpapersafari.com/58/70/jLB7Zb.png",
+  },
+  {
+    title: "Restoring Wholeness",
+    author: "Gil Fronsdal",
+    source: "audio dharma",
+    uri: "https://www.audiodharma.org/talks/14372/download",
+    imageSource:
+      "https://cdn.wallpapersafari.com/99/72/b1m2yM.jpg",
+  },
+  {
+    title: "Release is Peace",
+    author: "Gil Fronsdal",
+    source: "audio dharma",
+    uri: "https://www.audiodharma.org/talks/14380/download",
+    imageSource:
+      "https://wallpaperforu.com/wp-content/uploads/2020/05/vector_wallpaper_190520232191350x2400.jpg",
   },
 ];
 
@@ -222,11 +301,11 @@ export default function TrackPlayer() {
               color="#444"
             />
           </TouchableOpacity>
-          <SeekBar
+          {/* <SeekBar
             durationMillis={durationMillis}
             positionMillis={positionMillis}
             sliderValue={sliderValue}
-          />
+          /> */}
         </View>
       </ImageBackground>
     </View>

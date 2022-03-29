@@ -4,7 +4,6 @@ import {
     View,
     Image,
     Text,
-    Slider,
     ImageBackground,
   } from "react-native";
 
@@ -22,14 +21,14 @@ const SeekBar = ({
             {positionMillis + ' / ' + durationMillis}
           </Text>
         </View>
-        <Slider
+        {/* <Slider
 
 minimumValue={0}
 maximumValue={1}
 value={sliderValue}
 style={styles.slider}
 minimumTrackTintColor='#fff'
-maximumTrackTintColor='rgba(255, 255, 255, 0.14)'
+maximumTrackTintColor='rgba(255, 255, 255, 0.14)' */}
 />
       </View>
     );
