@@ -13,10 +13,11 @@ export default function ChangeSessionTime({ durationOptions, setSessionData }) {
             showLength ? setShowLength(false) : setShowLength(true)
           }
         >
-          <Text style={styles.changelength}>Set Length</Text>
+          <Text style={styles.changeLength}>Set Length</Text>
         </TouchableOpacity>
         {showLength ? (
           <Picker
+            style={{ backgroundColor: "white" }}
             onValueChange={(itemValue) => {
               setShowLength(false);
               setSessionData((currentSession) => {
@@ -43,8 +44,10 @@ export default function ChangeSessionTime({ durationOptions, setSessionData }) {
 }
 
 const styles = StyleSheet.create({
-  changelength: {
-    fontSize: 32,
-    textAlign: "center",
+  changeLength: {
+    color: "white",
+    fontSize: 40,
+    fontWeight: "bold",
+    marginTop: 5,
   },
 });
