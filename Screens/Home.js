@@ -54,11 +54,7 @@ export default function Home() {
       />
       <Tab.Screen
         name="Stats"
-
         component={DisplayStats}
-
-        component={Stats}
-
         options={{
           tabBarLabel: "Stats",
           tabBarIcon: ({ color }) => (
