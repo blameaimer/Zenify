@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { auth } from "../firebase";
-const HomeScreen = () => {
+const SignOutScreen = () => {
   const navigation = useNavigation();
 
   const handleSignOut = () => {
@@ -25,7 +25,7 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default SignOutScreen;
 
 const styles = StyleSheet.create({
   container: {

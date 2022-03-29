@@ -7,31 +7,43 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  Image,
 } from "react-native";
 
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 
-const LoginScreen = ({ navigation }) => {
+const SignUpScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const reactnavigation = useNavigation();
+  const [username, setUsername] = useState("");
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        reactnavigation.replace("Home");
+        navigation.replace("Home");
       }
     });
     return unsubscribe;
   }, []);
 
-  const handleLogin = () => {
+  const usersRef = db.ref("users");
+  const handleSignUp = () => {
     auth
-      .signInWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
+
+        user.updateProfile({
+          displayName: username,
+        });
+        return usersRef.child(username).set({
+          email: auth.currentUser.email,
+        });
+      })
+      .then(() => {
+        console.log("Data set");
       })
       .catch((error) => alert(error.message));
   };
@@ -39,15 +51,6 @@ const LoginScreen = ({ navigation }) => {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
-        <Image
-          style={{
-            width: 80,
-            height: 80,
-            alignSelf: "center",
-            marginBottom: 140,
-          }}
-          source={require("../components/PngItem_4047206.png")}
-        />
         <TextInput
           placeholder="Email"
           value={email}
@@ -61,24 +64,25 @@ const LoginScreen = ({ navigation }) => {
           style={styles.input}
           secureTextEntry
         />
+
+        <TextInput
+          placeholder="Username"
+          value={username}
+          onChangeText={(text) => setUsername(text)}
+          style={styles.input}
+        />
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleLogin} style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("SignUpScreen")}
-          style={[styles.button, styles.buttonOutline]}
-        >
-          <Text style={styles.buttonOutlineText}>Register</Text>
+        <TouchableOpacity onPress={handleSignUp} style={styles.button}>
+          <Text style={styles.buttonText}>Register</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
 };
 
-export default LoginScreen;
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
   container: {
