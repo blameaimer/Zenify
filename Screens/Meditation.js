@@ -74,7 +74,6 @@ function Meditation({ navigation }) {
                           }}
                         >
                           <ListItem item={item} />
-                          {console.log(currentNum)}
                         </TouchableOpacity>
                       )}
                       showsHorizontalScrollIndicator={false}

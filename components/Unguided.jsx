@@ -1,5 +1,5 @@
 
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useLayoutEffect } from "react";
 import {
   StyleSheet,
   Switch,
@@ -11,6 +11,8 @@ import {
   SectionList,
   Image,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { Audio } from "expo-av";
 import SwitchSelector from "react-native-switch-selector";
 import { trackContext } from "../utils/contexts";
 
@@ -29,41 +31,90 @@ const ListItem = ({ item }) => {
   );
 };
 function Unguided(props) {
+    const [isPlaying, setIsPLaying] = useState(false);
+    const [playbackInstance, setPlaybackInstance] = useState(null);
+    const [volume, setVolume] = useState(1.0);
+    const [isBuffering, setIsBuffering] = useState(true);
+    const [durationMillis, setDurationMillis] = useState(1);
+    const [positionMillis, setPositionMillis] = useState(0);
+    const [sliderValue, setSliderValue] = useState(0);
+    const [isSeeking, setIsSeeking] = useState(false);
+    const [paused, setPaused] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
+    const [name, setName] = useState(null);
+  
+    loadAudio = async () => {
+      try {
+        const playbackInstance = new Audio.Sound();
+        const source = {
+          uri: `https://moodly.site/sounds/${name}.mp3`,
+        };
+        console.log(source)
+        const status = {
+          shouldPlay: isPlaying,
+          volume: volume,
+        };
+  
+        playbackInstance.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
+        await playbackInstance.loadAsync(source, status, false);
+        setPlaybackInstance(playbackInstance);
+        setSliderValue(positionMillis / durationMillis);
+        setIsLoading(false);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+  
+    useLayoutEffect(() => {
+      try {
+        Audio.setAudioModeAsync({
+          allowsRecordingIOS: false,
+          interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+          playsInSilentModeIOS: true,
+          interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+          shouldDuckAndroid: true,
+          staysActiveInBackground: true,
+          playThroughEarpieceAndroid: true,
+        });
+  
+        loadAudio();
+      } catch (e) {
+        console.log(e);
+      }
+    }, [name]);
+  
+    onPlaybackStatusUpdate = (status) => {
+      setIsBuffering(status.isBuffering);
+      setDurationMillis(status.durationMillis);
+      setPositionMillis(status.positionMillis);
+    };
+  
+    handlePlayPause = async () => {
+      isPlaying
+        ? await playbackInstance.pauseAsync()
+        : await playbackInstance.playAsync();
+  
+      setIsPLaying((currentPlay) => !currentPlay);
+    };
+    
     return (
         <SafeAreaView style={{ flex: 1 }}>
         <SectionList
           contentContainerStyle={{ paddingHorizontal: 10 }}
           stickySectionHeadersEnabled={false}
           sections={SECTIONS}
-          renderSectionHeader={({ section }) => (
-            <>
-              <Text style={styles.sectionHeader}>{section.title}</Text>
-              {section.horizontal ? (
-                <FlatList
-                  horizontal
-                  data={section.data}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity
-                      onPress={() => {
-                        setCurrentIndex(item.key-1),
-                          navigation.navigate("TrackPlayer")
-                          
-                      }}
-                    >
-                      <ListItem item={item} />
-                      {console.log(currentNum)}
-                    </TouchableOpacity>
-                  )}
-                  showsHorizontalScrollIndicator={false}
-                />
-              ) : null}
-            </>
-          )
           renderItem={({ item, section }) => {
             if (section.horizontal) {
               return null;
             }
-            return <ListItem item={item} />;
+            return                    <TouchableOpacity
+            onPress={() => {
+              setName(item.text.toLowerCase())
+               handlePlayPause()
+            }}
+          >
+            <ListItem item={item} />
+          </TouchableOpacity>;
           }}
         />
         </SafeAreaView>
@@ -77,29 +128,29 @@ const SECTIONS = [
       data: [
         {
           key: "1",
-          text: "Breath",
-          uri: "https://mir-s3-cdn-cf.behance.net/project_modules/disp/4d412b54827733.596dc61650536.gif",
+          text: "Lightning",
+          uri: "https://cdn.dribbble.com/users/518045/screenshots/11604863/media/c6e2755cd5a30fecda85c2171b34b342.png",
         },
         {
           key: "2",
-          text: "Body Scan",
-          uri: "https://wallpaperaccess.com/full/1725723.jpg",
+          text: "Rain",
+          uri: "https://cdn.dribbble.com/users/63407/screenshots/7009071/media/4a5f94e5556a5772d3992f16a7355216.png",
         },
   
         {
           key: "3",
-          text: "Wonderful Happiness",
-          uri: "https://wallpaperboat.com/wp-content/uploads/2019/08/Firewatch-Wallpaper-For-Your-Iphone-1280-1024.jpg",
+          text: "Snow",
+          uri: "https://ak.picdn.net/shutterstock/videos/1058415691/thumb/1.jpg",
         },
         {
           key: "4",
-          text: "Thinking",
-          uri: "https://wallpapercave.com/wp/wp6827255.jpg",
+          text: "CampFire",
+          uri: "https://i.pinimg.com/originals/80/7d/1c/807d1c70e775ca8bd3dc6717febd11f0.jpg",
         },
         {
           key: "5",
-          text: "Receptive Mindfulness",
-          uri: "https://c4.wallpaperflare.com/wallpaper/772/265/137/2d-flat-nature-mountain-top-hd-wallpaper-preview.jpg",
+          text: "Birds",
+          uri: "https://www.pixel4k.com/wp-content/uploads/2018/03/Wallpaper%20forest,%20mountains,%20violet,%20birds,%20art,%20HD,%20Abstract%20668473088.jpg",
         },
       ],
     },
