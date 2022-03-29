@@ -1,5 +1,5 @@
 
-import React, { useState, useContext,useLayoutEffect } from "react";
+import React, { useState,useEffect } from "react";
 import {
   StyleSheet,
   Switch,
@@ -11,10 +11,7 @@ import {
   SectionList,
   Image,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { Audio } from "expo-av";
-import SwitchSelector from "react-native-switch-selector";
-import { trackContext } from "../utils/contexts";
 
 const ListItem = ({ item }) => {
   return (
@@ -31,71 +28,32 @@ const ListItem = ({ item }) => {
   );
 };
 function Unguided(props) {
-    const [isPlaying, setIsPLaying] = useState(false);
-    const [playbackInstance, setPlaybackInstance] = useState(null);
-    const [volume, setVolume] = useState(1.0);
-    const [isBuffering, setIsBuffering] = useState(true);
-    const [durationMillis, setDurationMillis] = useState(1);
-    const [positionMillis, setPositionMillis] = useState(0);
-    const [sliderValue, setSliderValue] = useState(0);
-    const [isSeeking, setIsSeeking] = useState(false);
-    const [paused, setPaused] = useState(true);
-    const [isLoading, setIsLoading] = useState(true);
+    const [sound, setSound] = useState();
     const [name, setName] = useState(null);
+
+
+    async function playSound() {
+      console.log('Loading Sound');
+      const { sound } = await Audio.Sound.createAsync(
+       { uri: `https://moodly.site/sounds/${name}.mp3`}
+      );
+      setSound(sound);
+      sound.setIsLoopingAsync(true);
+      console.log('Playing Sound');
+      await sound.playAsync(); setOn(true)}
   
-    loadAudio = async () => {
-      try {
-        const playbackInstance = new Audio.Sound();
-        const source = {
-          uri: `https://moodly.site/sounds/${name}.mp3`,
-        };
-        console.log(source)
-        const status = {
-          shouldPlay: isPlaying,
-          volume: volume,
-        };
+    useEffect(() => {
+      return sound
+        ? () => {
+            console.log('Unloading Sound');
+            // sound.unloadAsync(); 
+          }
+        : undefined;
+    }, [sound]);
+
   
-        playbackInstance.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
-        await playbackInstance.loadAsync(source, status, false);
-        setPlaybackInstance(playbackInstance);
-        setSliderValue(positionMillis / durationMillis);
-        setIsLoading(false);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-  
-    useLayoutEffect(() => {
-      try {
-        Audio.setAudioModeAsync({
-          allowsRecordingIOS: false,
-          interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-          playsInSilentModeIOS: true,
-          interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-          shouldDuckAndroid: true,
-          staysActiveInBackground: true,
-          playThroughEarpieceAndroid: true,
-        });
-  
-        loadAudio();
-      } catch (e) {
-        console.log(e);
-      }
-    }, [name]);
-  
-    onPlaybackStatusUpdate = (status) => {
-      setIsBuffering(status.isBuffering);
-      setDurationMillis(status.durationMillis);
-      setPositionMillis(status.positionMillis);
-    };
-  
-    handlePlayPause = async () => {
-      isPlaying
-        ? await playbackInstance.pauseAsync()
-        : await playbackInstance.playAsync();
-  
-      setIsPLaying((currentPlay) => !currentPlay);
-    };
+
+   
     
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -110,7 +68,7 @@ function Unguided(props) {
             return                    <TouchableOpacity
             onPress={() => {
               setName(item.text.toLowerCase())
-               handlePlayPause()
+              playSound();
             }}
           >
             <ListItem item={item} />
