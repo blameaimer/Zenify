@@ -3,12 +3,8 @@ import { Swipeable } from "react-native-gesture-handler";
 import DeleteTask from "./DeleteTask";
 import { useState } from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { db, auth } from "../firebase";
 const TaskCard = ({ item, setTasks }) => {
   const [completed, setCompleted] = useState(false);
-
-  const userName = auth.currentUser?.displayName;
-  const SessionRef = db.ref("users").child(userName);
 
   return (
     <Swipeable

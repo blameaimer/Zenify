@@ -10,7 +10,6 @@ import {
 import { useState } from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";
-
 const AddTask = (props) => {
   const [inputText, setInputText] = useState("");
   const [modalVisible, setModalVisible] = useState(false);

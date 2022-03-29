@@ -28,7 +28,7 @@ export default function Home() {
         options={{
           tabBarLabel: "Meditate",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="ios-body" color={color} size={26} />
+            <Ionicons name="ios-body" color={color} size={24} />
           ),
         }}
       />
@@ -48,7 +48,7 @@ export default function Home() {
         options={{
           tabBarLabel: "Focus",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="ios-caret-up-circle" color={color} size={26} />
+            <Ionicons name="ios-hourglass-outline" color={color} size={24} />
           ),
         }}
       />
