@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, View, Image, Text, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Text,
+  ImageBackground,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Audio } from "expo-av";
 

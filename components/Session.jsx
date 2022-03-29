@@ -7,6 +7,27 @@ import { handleSessionNotification } from "../utils/notifications.js";
 import SessionModal from "./SessionModal";
 
 export default function Session() {
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const userName = auth.currentUser?.displayName;
+    const taskRef = db.ref("users").child(userName).child("tasks");
+    const listener = taskRef.orderByChild("index").on(
+      "value",
+      (snapshot) => {
+        const fetchedTasks = [];
+        snapshot.forEach((task) => {
+          fetchedTasks.push(task);
+        });
+        setTasks(fetchedTasks);
+      },
+      (errorObject) => {
+        console.log("The readfailed: " + errorObject);
+      }
+    );
+    return () => taskRef.off("value", listener);
+  }, [db]);
+
   const focusSessionData = {
     title: "Focus",
     currentDuration: 10,

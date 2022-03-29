@@ -16,8 +16,8 @@ const DisplayStats = () => {
       (snapshot) => {
         const fetchedSessions = [];
 
-        snapshot.val().forEach((session) => {
-          fetchedSessions.push(session);
+        snapshot.forEach((session) => {
+          fetchedSessions.push(session.val());
         });
         setBreakSessions(fetchedSessions);
       },
@@ -29,8 +29,8 @@ const DisplayStats = () => {
       "value",
       (snapshot) => {
         const fetchedSessions = [];
-        snapshot.val().forEach((session) => {
-          fetchedSessions.push(session);
+        snapshot.forEach((session) => {
+          fetchedSessions.push(session.val());
         });
         setFocusSessions(fetchedSessions);
       },
