@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <Tab.Navigator
       initialRouteName="Meditation"
-      activeColor="white"
+      activeColor="#008bbe"
       barStyle={{ backgroundColor: "black" }}
       screenOptions={{ headerShown: true }}
     >
@@ -59,16 +59,6 @@ export default function Home() {
           tabBarLabel: "Stats",
           tabBarIcon: ({ color }) => (
             <Ionicons name="ios-stats-chart" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={Setting}
-        options={{
-          tabBarLabel: "Settings",
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="ios-settings-sharp" color={color} size={26} />
           ),
         }}
       />

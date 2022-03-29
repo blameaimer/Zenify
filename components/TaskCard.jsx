@@ -3,9 +3,12 @@ import { Swipeable } from "react-native-gesture-handler";
 import DeleteTask from "./DeleteTask";
 import { useState } from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
+import { db, auth } from "../firebase";
 const TaskCard = ({ item, setTasks }) => {
   const [completed, setCompleted] = useState(false);
+
+  const userName = auth.currentUser?.displayName;
+  const SessionRef = db.ref("users").child(userName);
 
   return (
     <Swipeable
@@ -16,13 +19,13 @@ const TaskCard = ({ item, setTasks }) => {
           {completed ? (
             <MaterialCommunityIcons
               name="circle-slice-8"
-              color={"white"}
+              color={"#008bbe"}
               size={20}
             />
           ) : (
             <MaterialCommunityIcons
               name="circle-outline"
-              color={"white"}
+              color={"#008bbe"}
               size={20}
             />
           )}
@@ -44,9 +47,9 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 15,
     borderColor: "#22303C",
-    borderRadius: 5,
+    borderRadius: 15,
     borderWidth: 1,
-    marginTop: 5,
+    marginTop: 10,
     flexDirection: "row",
   },
   text: {

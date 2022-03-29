@@ -62,10 +62,15 @@ const AddTask = (props) => {
           </View>
         </Modal>
       </View>
-
-      <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-        <AntDesign name="pluscircleo" color={"#8899A6"} size={26} />
-      </TouchableOpacity>
+      <View style={styles.header}>
+        <Text style={styles.title}>All Tasks</Text>
+        <TouchableOpacity
+          style={styles.plusbutton}
+          onPress={() => setModalVisible(!modalVisible)}
+        >
+          <AntDesign name="pluscircle" color={"#008bbe"} size={45} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -79,6 +84,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 22,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: "bold",
+    paddingLeft: 10,
+    paddingTop: 20,
+    fontWeight: "700",
+    color: "#8899A6",
+  },
+  plusbutton: {
+    paddingTop: 5,
+    alignSelf: "flex-end",
+    margin: 15,
   },
   modalView: {
     margin: 10,

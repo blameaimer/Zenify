@@ -50,9 +50,9 @@ const styles = StyleSheet.create({
     color: "#8899A6",
     padding: 15,
     borderColor: "#22303C",
-    borderRadius: 5,
+    borderRadius: 10,
 
-    marginTop: 5,
+    marginTop: 10,
     width: 50,
   },
   text: {

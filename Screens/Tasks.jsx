@@ -39,8 +39,6 @@ export default function CreateTasksScreen() {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>All Tasks</Text>
-
       <AddTask addTask={addTask} />
 
       <FlatList
@@ -57,14 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#121212",
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    paddingLeft: 20,
-    paddingTop: 20,
-    fontWeight: "700",
-    color: "#8899A6",
-  },
+
   content: {
     padding: 40,
     paddingHorizontal: 20,
