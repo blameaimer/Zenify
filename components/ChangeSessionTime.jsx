@@ -8,13 +8,15 @@ export default function ChangeSessionTime({ durationOptions, setSessionData }) {
   return (
     <>
       <View>
-        <TouchableOpacity
-          onPress={() =>
-            showLength ? setShowLength(false) : setShowLength(true)
-          }
-        >
-          <Text style={styles.changeLength}>Set Length</Text>
-        </TouchableOpacity>
+        <View style={styles.lengthbox}>
+          <TouchableOpacity
+            onPress={() =>
+              showLength ? setShowLength(false) : setShowLength(true)
+            }
+          >
+            <Text style={styles.changeLength}>Set Length</Text>
+          </TouchableOpacity>
+        </View>
         {showLength ? (
           <Picker
             style={{ backgroundColor: "white" }}
@@ -46,8 +48,19 @@ export default function ChangeSessionTime({ durationOptions, setSessionData }) {
 const styles = StyleSheet.create({
   changeLength: {
     color: "white",
-    fontSize: 40,
+    fontSize: 35,
     fontWeight: "bold",
     marginTop: 5,
+  },
+  lengthbox: {
+    backgroundColor: "#181818",
+    margin: 25,
+    width: "60%",
+    padding: 15,
+    borderRadius: 15,
+    borderWidth: 2,
+    borderColor: "#404040"
+
+
   },
 });
