@@ -3,33 +3,49 @@ import { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import { LineChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
+import createTestSessionData from "../utils/createTestSessionData";
 
 const DisplayStats = () => {
   const [FocusSessions, setFocusSessions] = useState([]);
   const [BreakSessions, setBreakSessions] = useState([]);
+  // const [taskDataTimestamps, setTaskDataTimestamps] = useState([]);
+  // const [taskDataSessionTime, setTaskDataSessionTime] = useState([]);
+  const [plotData, setPlotData] = useState();
 
-  const data = {
-    labels: ["January", "February", "March", "April", "May", "June"],
-    datasets: [
-      {
-        data: [20, 45, 28, 80, 99, 43],
-        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-        strokeWidth: 2, // optional
-      },
-    ],
-    legend: ["Rainy Days"], // optional
-  };
-  const screenWidth = Dimensions.get("window").width;
-  const chartConfig = {
-    backgroundGradientFrom: "#1E2923",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#08130D",
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
-    barPercentage: 0.5,
-    useShadowColorFromDataset: false, // optional
-  };
+  // const data = {
+  //   labels: ["January", "February", "March", "April", "May", "June"],
+  //   datasets: [
+  //     {
+  //       data: [20, 45, 28, 80, 99, 43],
+  //       color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+  //       strokeWidth: 2, // optional
+  //     },
+  //   ],
+  //   legend: ["Rainy Days"], // optional
+  // };
+
+  useEffect(() => {
+    setPlotData(() => {
+      const dataSet = [];
+      FocusSessions.forEach((session) => dataSet.push(session.time));
+      return {
+        labels: ["January", "February", "March", "April", "May", "June"],
+        datasets: [
+          {
+            data: dataSet,
+            //data: [1, 2, 3, 4, 5, 6, 7],
+            color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
+            strokeWidth: 2,
+          },
+        ],
+        legend: ["Rainy Days"],
+      };
+    });
+  }, [FocusSessions]);
+
+  // useEffect(() => {
+  //   createTestSessionData();
+  // }, []);
 
   useEffect(() => {
     const FocusSessionRef = db
@@ -79,23 +95,20 @@ const DisplayStats = () => {
   const BreakCount = BreakSessions.length;
   let TotalWorkTime = 0;
   let TotalBreakTime = 0;
-  let SessionTimeStamps = [];
+  // let SessionTimeStamps = [];
   FocusSessions.forEach((session) => {
-    var format = {
-      day: "numeric",
-      month: "2-digit",
-      year: "numeric",
-      hour: "numeric",
-    };
-    const formattedDate = new Date(session.timestamp).toLocaleString(
-      "en-gb",
-      format
-    );
-    SessionTimeStamps.push(session.timestamp);
-
+    // var format = {
+    //   day: "numeric",
+    //   month: "2-digit",
+    //   year: "numeric",
+    //   hour: "numeric",
+    // };
+    // const formattedDate = new Date(session.timestamp).toLocaleString(
+    //   "en-gb",
+    //   format
+    // );
     TotalWorkTime += session.time;
   });
-  console.log(SessionDateData);
   BreakSessions.forEach((session) => {
     TotalBreakTime += session.time;
   });
@@ -104,14 +117,31 @@ const DisplayStats = () => {
   const Breakminutes = Math.floor(TotalBreakTime / 60);
   const Breakseconds = Math.ceil(TotalBreakTime % 60);
   // ${minutes}:${paddedSeconds}
+
+  const screenWidth = Dimensions.get("window").width;
+  const chartConfig = {
+    backgroundGradientFrom: "#1E2923",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#08130D",
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false, // optional
+  };
+
   return (
     <View style={styles.container}>
-      <LineChart
-        data={data}
-        width={screenWidth}
-        height={220}
-        chartConfig={chartConfig}
-      />
+      {plotData ? (
+        <LineChart
+          data={plotData}
+          width={screenWidth}
+          height={220}
+          chartConfig={chartConfig}
+        />
+      ) : (
+        <Text>Loading</Text>
+      )}
       <View style={styles.circle}>
         <Text style={styles.circlenumber}>{FocusCount}</Text>
       </View>
@@ -188,7 +218,7 @@ const styles = StyleSheet.create({
     padding: 15,
     alignSelf: "flex-end",
     backgroundColor: "#181818",
-    position: "absolute",
+    // position: "absolute",
     borderRadius: 15,
   },
   infobox: {},
