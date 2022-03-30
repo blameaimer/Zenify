@@ -97,16 +97,6 @@ const DisplayStats = () => {
   let TotalBreakTime = 0;
   // let SessionTimeStamps = [];
   FocusSessions.forEach((session) => {
-    // var format = {
-    //   day: "numeric",
-    //   month: "2-digit",
-    //   year: "numeric",
-    //   hour: "numeric",
-    // };
-    // const formattedDate = new Date(session.timestamp).toLocaleString(
-    //   "en-gb",
-    //   format
-    // );
     TotalWorkTime += session.time;
   });
   BreakSessions.forEach((session) => {
