@@ -21,15 +21,15 @@ export default function ChangeSessionTime({ durationOptions, setSessionData }) {
             
           </TouchableOpacity>
         </View>
-        <View style={{marginTop:"50%",alignSelf:"center"}}>
-        <Modal  animationType="slide"       
+        <View style={{marginTop:"50%",alignSelf:"center",bottom:0}}>
+        <Modal  animationType="fade"       
               transparent={true}     
                  visible={modalVisible}          
                     onRequestClose={() => {            
                          Alert.alert("Modal has been closed.");               setModalVisible(!modalVisible);             }}           > 
           <Picker
             // style={{ }}
-            itemStyle={{ backgroundColor: "black", color: "white", fontSize:17 }} 
+            itemStyle={{ backgroundColor: "black", color: "white", fontSize:27 }} 
             onValueChange={(itemValue) => {
               setModalVisible(false);
               setSessionData((currentSession) => {
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   lengthbox: {
     justifyContent:"center",
     alignItems:"center",
-    margin: "20%",
+    margin: "10%",
     width: "60%",
     padding: 15,
 
