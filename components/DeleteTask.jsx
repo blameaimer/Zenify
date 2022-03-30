@@ -10,8 +10,10 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 const DeleteTask = ({ item, setTasks }) => {
   const deleteHandler = () => {
     setTasks(() => {
-      const userName = auth.currentUser?.displayName;
-      const usersRef = db.ref("users").child(userName).child("tasks");
+      const usersRef = db
+        .ref("users")
+        .child(auth.currentUser.uid)
+        .child("tasks");
       usersRef.child(item.key).remove();
     });
   };
