@@ -46,7 +46,7 @@ const LoginScreen = ({ navigation }) => {
             alignSelf: "center",
             marginBottom: 140,
           }}
-          source={require("../components/PngItem_4047206.png")}
+          source={require("../assets/PngItem_4047206.png")}
         />
         <TextInput
           placeholder="Email"

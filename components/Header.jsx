@@ -11,7 +11,7 @@ function Header({ navigation }) {
       <TouchableOpacity onPress={goHome}>
         <Image
           style={{ width: 30, height: 30 }}
-          source={require("./PngItem_4047206.png")}
+          source={require("../assets/PngItem_4047206.png")}
         />
       </TouchableOpacity>
     </View>

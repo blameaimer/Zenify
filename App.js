@@ -64,7 +64,7 @@ export default function App() {
                 <TouchableOpacity onPress={() => navigation.navigate("Home")}>
                   <Image
                     style={{ width: 30, height: 30 }}
-                    source={require("./components/PngItem_4047206.png")}
+                    source={require("./assets/PngItem_4047206.png")}
                   />
                 </TouchableOpacity>
               ),
@@ -92,7 +92,7 @@ export default function App() {
                 >
                   <Image
                     style={{ width: 30, height: 30 }}
-                    source={require("./components/PngItem_4047206.png")}
+                    source={require("./assets/PngItem_4047206.png")}
                   />
                 </TouchableOpacity>
               ),
