@@ -4,9 +4,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Meditation from "./Meditation";
 import Tasks from "./Tasks";
-import Focus from "./Focus";
-import Stats from "./Stats";
-import Setting from "./Setting";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Session from "../components/Session";
 

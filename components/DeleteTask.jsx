@@ -1,10 +1,8 @@
 import {
   StyleSheet,
-  Text,
   TouchableWithoutFeedback,
   View,
   Alert,
-  TouchableOpacity,
 } from "react-native";
 import { db, auth } from "../firebase";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
