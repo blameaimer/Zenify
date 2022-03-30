@@ -10,8 +10,7 @@ export default function CreateTasksScreen() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    const userName = auth.currentUser?.displayName;
-    const taskRef = db.ref("users").child(userName).child("tasks");
+    const taskRef = db.ref("users").child(auth.currentUser.uid).child("tasks");
     const listener = taskRef.orderByChild("index").on(
       "value",
       (snapshot) => {
@@ -29,8 +28,7 @@ export default function CreateTasksScreen() {
   }, [db]);
 
   const addTask = (text) => {
-    const userName = auth.currentUser?.displayName;
-    const taskRef = db.ref("users").child(userName).child("tasks");
+    const taskRef = db.ref("users").child(auth.currentUser.uid).child("tasks");
     taskRef.child(text).set({
       index: tasks.length + 1,
       id: uuidv4(),

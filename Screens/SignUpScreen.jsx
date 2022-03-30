@@ -38,7 +38,8 @@ const SignUpScreen = () => {
         user.updateProfile({
           displayName: username,
         });
-        return usersRef.child(username).set({
+        return usersRef.child(auth.currentUser.uid).set({
+          uid: auth.currentUser.uid,
           email: auth.currentUser.email,
         });
       })

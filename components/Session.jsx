@@ -10,8 +10,7 @@ export default function Session() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    const userName = auth.currentUser?.displayName;
-    const taskRef = db.ref("users").child(userName).child("tasks");
+    const taskRef = db.ref("users").child(auth.currentUser.uid).child("tasks");
     const listener = taskRef.orderByChild("index").on(
       "value",
       (snapshot) => {
@@ -58,10 +57,9 @@ export default function Session() {
   }, [isBreak]);
 
   useEffect(() => {
-    const userName = auth.currentUser?.displayName;
     const SessionRef = db
       .ref("users")
-      .child(userName)
+      .child(auth.currentUser.uid)
       .child(isBreak ? "Break" : "Focus");
     const listener = SessionRef.on(
       "value",
@@ -82,10 +80,9 @@ export default function Session() {
   const handleCompletion = () => {
     setModalVisible(true);
     setIsPlaying(false);
-    const userName = auth.currentUser?.displayName;
     const SessionRef = db
       .ref("users")
-      .child(userName)
+      .child(auth.currentUser.uid)
       .child(isBreak ? "Break" : "Focus");
 
     SessionRef.child(counterData).set({

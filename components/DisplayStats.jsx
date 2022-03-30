@@ -7,9 +7,14 @@ const DisplayStats = () => {
   const [BreakSessions, setBreakSessions] = useState([]);
 
   useEffect(() => {
-    const userName = auth.currentUser?.displayName;
-    const FocusSessionRef = db.ref("users").child(userName).child("Focus");
-    const BreakSessionRef = db.ref("users").child(userName).child("Break");
+    const FocusSessionRef = db
+      .ref("users")
+      .child(auth.currentUser.uid)
+      .child("Focus");
+    const BreakSessionRef = db
+      .ref("users")
+      .child(auth.currentUser.uid)
+      .child("Break");
 
     const Breaklistener = BreakSessionRef.on(
       "value",
