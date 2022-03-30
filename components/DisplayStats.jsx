@@ -1,10 +1,35 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
+import { LineChart } from "react-native-chart-kit";
+import { Dimensions } from "react-native";
 
 const DisplayStats = () => {
   const [FocusSessions, setFocusSessions] = useState([]);
   const [BreakSessions, setBreakSessions] = useState([]);
+
+  const data = {
+    labels: ["January", "February", "March", "April", "May", "June"],
+    datasets: [
+      {
+        data: [20, 45, 28, 80, 99, 43],
+        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+        strokeWidth: 2, // optional
+      },
+    ],
+    legend: ["Rainy Days"], // optional
+  };
+  const screenWidth = Dimensions.get("window").width;
+  const chartConfig = {
+    backgroundGradientFrom: "#1E2923",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#08130D",
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false, // optional
+  };
 
   useEffect(() => {
     const FocusSessionRef = db
@@ -54,9 +79,23 @@ const DisplayStats = () => {
   const BreakCount = BreakSessions.length;
   let TotalWorkTime = 0;
   let TotalBreakTime = 0;
+  let SessionTimeStamps = [];
   FocusSessions.forEach((session) => {
+    var format = {
+      day: "numeric",
+      month: "2-digit",
+      year: "numeric",
+      hour: "numeric",
+    };
+    const formattedDate = new Date(session.timestamp).toLocaleString(
+      "en-gb",
+      format
+    );
+    SessionTimeStamps.push(session.timestamp);
+
     TotalWorkTime += session.time;
   });
+  console.log(SessionDateData);
   BreakSessions.forEach((session) => {
     TotalBreakTime += session.time;
   });
@@ -67,8 +106,12 @@ const DisplayStats = () => {
   // ${minutes}:${paddedSeconds}
   return (
     <View style={styles.container}>
-      <View></View>
-      <View></View>
+      <LineChart
+        data={data}
+        width={screenWidth}
+        height={220}
+        chartConfig={chartConfig}
+      />
       <View style={styles.circle}>
         <Text style={styles.circlenumber}>{FocusCount}</Text>
       </View>
@@ -108,7 +151,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center",
     width: "100%",
     backgroundColor: "#121212",
