@@ -30,23 +30,31 @@ const ListItem = ({ item }) => {
 function Unguided(props) {
     const [sound, setSound] = useState();
     const [name, setName] = useState(null);
+    const [isPlaying, setIsPlaying]=useState(false);
 
 
     async function playSound() {
       console.log('Loading Sound');
+      
       const { sound } = await Audio.Sound.createAsync(
        { uri: `https://moodly.site/sounds/${name}.mp3`}
       );
       setSound(sound);
       sound.setIsLoopingAsync(true);
       console.log('Playing Sound');
-      await sound.playAsync(); setOn(true)}
+      if(!isPlaying){
+      await sound.playAsync()}else {
+        await sound.stopAsync()
+        setName(null)
+      }
+      setIsPlaying((currentPlay) => !currentPlay);
+    }
   
     useEffect(() => {
       return sound
         ? () => {
             console.log('Unloading Sound');
-            // sound.unloadAsync(); 
+            sound.unloadAsync(); 
           }
         : undefined;
     }, [sound]);
@@ -57,6 +65,34 @@ function Unguided(props) {
     
     return (
         <SafeAreaView style={{ flex: 1 }}>
+          <View style={{    flexGrow: 1,
+    padding: 15,
+    // height: "20%",
+    marginTop: 5,
+    justifyContent: "space-between",
+    flexDirection: "row",}}> 
+          <Text style={{  fontSize: 30,
+    fontWeight: "bold",
+    paddingLeft: 10,
+    paddingTop: 20,
+    fontWeight: "700",
+    color: "white"}}> Sounds</Text>
+    <View style={{height: 40}}>
+    {isPlaying? <Image
+          style={{
+            width: 80,
+            height: 80,
+            alignSelf: "center",
+            marginBottom: 140,
+            alignSelf:"flex-end",
+            position:"relative"
+          }}
+          source={require("../assets/554818561cbf36d813ef2010cc9d66cc.gif")}
+        /> : undefined }
+        </View>
+        
+        </View>
+          
         <SectionList
           contentContainerStyle={{ paddingHorizontal: 10 }}
           stickySectionHeadersEnabled={false}
