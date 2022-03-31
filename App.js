@@ -16,12 +16,9 @@ import { trackContext } from "./utils/contexts";
 import { LogBox } from "react-native";
 import SignUpScreen from "./Screens/SignUpScreen";
 import SplashScreen from "./Screens/SplashScreen";
-LogBox.ignoreLogs([
-  "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
-  "AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage",
-  ["Setting a timer"],
-  "[Warning: Cannot update a component (`Session`) while rendering a different component (`CountdownCircleTimer`). To locate the bad setState() call inside `CountdownCircleTimer`, follow the stack trace as described in https://reactjs.org/link/setstate-in-render]",
-]);
+
+
+LogBox.ignoreAllLogs();
 
 const Stack = createStackNavigator();
 
