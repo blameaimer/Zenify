@@ -23,6 +23,7 @@ export default function Home() {
         name="Meditation"
         component={Meditation}
         options={{
+          
           tabBarLabel: "Meditate",
           tabBarIcon: ({ color }) => (
             <Ionicons name="ios-body" color={color} size={24} />
@@ -32,7 +33,10 @@ export default function Home() {
       <Tab.Screen
         name="Tasks"
         component={Tasks}
+        
         options={{
+          
+          tabBarColor: "#121212",
           tabBarLabel: "Tasks",
           tabBarIcon: ({ color }) => (
             <Ionicons name="ios-list" color={color} size={26} />
@@ -53,6 +57,7 @@ export default function Home() {
         name="Stats"
         component={DisplayStats}
         options={{
+          tabBarColor: "#121212",
           tabBarLabel: "Stats",
           tabBarIcon: ({ color }) => (
             <Ionicons name="ios-stats-chart" color={color} size={26} />

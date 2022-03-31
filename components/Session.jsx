@@ -119,8 +119,9 @@ export default function Session() {
         setKey={setKey}
       />
 
-      <TouchableOpacity onPress={handlePress}>
+      <TouchableOpacity  style={styles.circle} onPress={handlePress}>
         <CountdownCircleTimer
+
           size={300}
           key={key}
           isPlaying={isPlaying}
@@ -160,7 +161,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     paddingBottom: 30,
-    backgroundColor: "#181818",
+    backgroundColor: "black",
   },
-  changeLength: { color: "white", fontSize: 40, fontWeight: "bold" },
+  changeLength: {marginTop:"20%", color: "white", fontSize: 40, fontWeight: "bold" },
+  circle:{
+    
+    position:"absolute",
+    marginTop:"50%",
+    justifyContent: "center",
+    alignSelf:"center"
+    
+   
+  }
 });

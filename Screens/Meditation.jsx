@@ -38,11 +38,12 @@ function Meditation({ navigation }) {
       <View style={styles.switch}>
         <SwitchSelector
           initial={0}
+          backgroundColor={"#22303C"}
           onPress={toggleSwitch}
-          textColor={"#015489"} //'#7a44cf'
+          textColor={"white"} //'#7a44cf'
           selectedColor={"white"}
-          buttonColor={"#015489"}
-          borderColor={"#015489"}
+          buttonColor={"#8899A6"}
+          borderColor={"black"}
           bold={true}
           hasPadding
           // buttonMargin={10}
