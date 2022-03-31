@@ -30,12 +30,12 @@ export default function Session() {
   const focusSessionData = {
     title: "Focus",
     currentDuration: 10,
-    durationOptions: ["", 0.08, 20, 25, 30, 35, 40, 45],
+    durationOptions: ["", 5, 20, 25, 30, 35, 40, 45],
   };
   const breakSessionData = {
     title: "Break",
-    currentDuration: 20,
-    durationOptions: ["", 0.08, 5, 10, 15],
+    currentDuration: 10,
+    durationOptions: ["", 5, 10, 15],
   };
 
   const [isBreak, setIsBreak] = useState(false);
@@ -78,6 +78,7 @@ export default function Session() {
   }, [db]);
 
   const handleCompletion = () => {
+    console.log("on complete called");
     setModalVisible(true);
     setIsPlaying(false);
     const SessionRef = db
@@ -119,9 +120,8 @@ export default function Session() {
         setKey={setKey}
       />
 
-      <TouchableOpacity  style={styles.circle} onPress={handlePress}>
+      <TouchableOpacity style={styles.circle} onPress={handlePress}>
         <CountdownCircleTimer
-
           size={300}
           key={key}
           isPlaying={isPlaying}
@@ -133,6 +133,8 @@ export default function Session() {
           onComplete={handleCompletion}
         >
           {({ remainingTime }) => {
+            // console.log(remainingTime, "<<< remaining time from timer");
+            // console.log(sessionData.currentDuration, "<<< duration");
             const minutes = Math.floor(remainingTime / 60);
             const seconds = remainingTime % 60;
             const paddedSeconds = String(seconds).padStart(2, "0");
@@ -163,14 +165,16 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     backgroundColor: "black",
   },
-  changeLength: {marginTop:"20%", color: "white", fontSize: 40, fontWeight: "bold" },
-  circle:{
-    
-    position:"absolute",
-    marginTop:"50%",
+  changeLength: {
+    marginTop: "20%",
+    color: "white",
+    fontSize: 40,
+    fontWeight: "bold",
+  },
+  circle: {
+    position: "absolute",
+    marginTop: "50%",
     justifyContent: "center",
-    alignSelf:"center"
-    
-   
-  }
+    alignSelf: "center",
+  },
 });
