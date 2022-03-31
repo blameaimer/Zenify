@@ -11,6 +11,8 @@ const DisplayStats = () => {
   // const [taskDataTimestamps, setTaskDataTimestamps] = useState([]);
   // const [taskDataSessionTime, setTaskDataSessionTime] = useState([]);
   const [plotData, setPlotData] = useState();
+  const [dataLoaded, setDataLoaded] = useState(false);
+  // console.log(plotData);
 
   // const data = {
   //   labels: ["January", "February", "March", "April", "May", "June"],
@@ -25,7 +27,7 @@ const DisplayStats = () => {
   // };
 
   useEffect(() => {
-    setPlotData(() => {
+    setPlotData(async () => {
       const dataSet = [];
       FocusSessions.forEach((session) => dataSet.push(session.time));
       return {
@@ -41,7 +43,8 @@ const DisplayStats = () => {
         legend: ["Rainy Days"],
       };
     });
-  }, [FocusSessions]);
+    // setDataLoaded(true);
+  }, []);
 
   // useEffect(() => {
   //   createTestSessionData();
@@ -122,7 +125,7 @@ const DisplayStats = () => {
 
   return (
     <View style={styles.container}>
-      {plotData ? (
+      {dataLoaded ? (
         <LineChart
           data={plotData}
           width={screenWidth}
