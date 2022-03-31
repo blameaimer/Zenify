@@ -1,6 +1,6 @@
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import ChangeSessionTime from "./ChangeSessionTime";
-import { db, auth } from "../firebase";
+import { db, auth, createdAt } from "../firebase";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
 import { handleSessionNotification } from "../utils/notifications.js";
@@ -88,6 +88,7 @@ export default function Session() {
     SessionRef.child(counterData).set({
       sessionNo: counterData,
       time: sessionData.currentDuration,
+      timestamp: createdAt,
     });
   };
 
@@ -120,7 +121,7 @@ export default function Session() {
 
       <TouchableOpacity  style={styles.circle} onPress={handlePress}>
         <CountdownCircleTimer
-          
+
           size={300}
           key={key}
           isPlaying={isPlaying}
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     paddingBottom: 30,
     backgroundColor: "black",
   },

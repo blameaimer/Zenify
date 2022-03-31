@@ -1,10 +1,47 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
+import { LineChart } from "react-native-chart-kit";
+import { Dimensions } from "react-native";
+import createTestSessionData from "../utils/createTestSessionData";
 
 const DisplayStats = () => {
   const [FocusSessions, setFocusSessions] = useState([]);
   const [BreakSessions, setBreakSessions] = useState([]);
+  // const [taskDataTimestamps, setTaskDataTimestamps] = useState([]);
+  // const [taskDataSessionTime, setTaskDataSessionTime] = useState([]);
+  const [plotData, setPlotData] = useState(
+  );
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  useEffect(() => {
+    let dataSet = FocusSessions.map((session) => session.time).slice(0,50);
+    let avgLst = []
+    let acc = 20
+    for (let index = 0; index < dataSet.length; index++) {
+      acc += dataSet[index]
+      avgLst.push(acc/(index+1))
+    }
+    setPlotData(() => {
+      return {
+        labels: ["January", "February", "March"],
+        datasets: [
+          {
+            data: [20, ...avgLst],
+            
+          },
+        ],
+        legend: ["Focus Sessions"],
+      };
+    });
+    setDataLoaded(true);
+  }, [FocusSessions, db]);
+
+  console.log(plotData)
+
+  // useEffect(() => {
+  //   createTestSessionData();
+  // }, []);
 
   useEffect(() => {
     const FocusSessionRef = db
@@ -54,6 +91,7 @@ const DisplayStats = () => {
   const BreakCount = BreakSessions.length;
   let TotalWorkTime = 0;
   let TotalBreakTime = 0;
+  // let SessionTimeStamps = [];
   FocusSessions.forEach((session) => {
     TotalWorkTime += session.time;
   });
@@ -65,10 +103,38 @@ const DisplayStats = () => {
   const Breakminutes = Math.floor(TotalBreakTime / 60);
   const Breakseconds = Math.ceil(TotalBreakTime % 60);
   // ${minutes}:${paddedSeconds}
+
+  const screenWidth = Dimensions.get("window").width;
+  const chartConfig = {
+    backgroundGradientFrom: "#1E2923",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#08130D",
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false, // optional
+    // color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
+            // strokeWidth: 2,
+  };
+
   return (
     <View style={styles.container}>
-      <View></View>
-      <View></View>
+      {dataLoaded ? (
+        <LineChart
+        withOuterLines={true}
+          data={plotData}
+          width={screenWidth}
+          height={220}
+          chartConfig={chartConfig}
+          withDots={false}
+          withVerticalLines = {false}
+          withHorizontalLines={false}
+          bezier
+        />
+      ) : (
+        <Text>Loading</Text>
+      )}
       <View style={styles.circle}>
         <Text style={styles.circlenumber}>{FocusCount}</Text>
       </View>
@@ -108,7 +174,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center",
     width: "100%",
     backgroundColor: "#121212",
@@ -145,7 +211,7 @@ const styles = StyleSheet.create({
     padding: 15,
     alignSelf: "flex-end",
     backgroundColor: "#181818",
-    position: "absolute",
+    // position: "absolute",
     borderRadius: 15,
   },
   infobox: {},
