@@ -13,26 +13,8 @@ const DisplayStats = () => {
   const [plotData, setPlotData] = useState(
   );
   const [dataLoaded, setDataLoaded] = useState(false);
-  // console.log(plotData);
-
-  // const data = {
-  //   labels: ["January", "February", "March", "April", "May", "June"],
-  //   datasets: [
-  //     {
-  //       data: [20, 45, 28, 80, 99, 43],
-  //       color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-  //       strokeWidth: 2, // optional
-  //     },
-  //   ],
-  //   legend: ["Rainy Days"], // optional
-  // };
 
   useEffect(() => {
-    console.log('hiiii')
-    // let dataSet = [];
-    // console.log(FocusSessions)
-    // FocusSessions.forEach((session) => dataSet.push(session.time));
-    // dataSet = dataSet.slice(0,20)
     let dataSet = FocusSessions.map((session) => session.time).slice(0,50);
     let avgLst = []
     let acc = 20
