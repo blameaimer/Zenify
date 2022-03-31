@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View,ScrollView } from "react-native";
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import { LineChart } from "react-native-chart-kit";
@@ -37,7 +37,6 @@ const DisplayStats = () => {
     setDataLoaded(true);
   }, [FocusSessions, db]);
 
-  console.log(plotData)
 
   // useEffect(() => {
   //   createTestSessionData();
@@ -106,11 +105,11 @@ const DisplayStats = () => {
 
   const screenWidth = Dimensions.get("window").width;
   const chartConfig = {
-    backgroundGradientFrom: "#1E2923",
+    backgroundGradientFrom: "#181818",
     backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#08130D",
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    backgroundGradientTo: "#181818",
+    backgroundGradientToOpacity: 0,
+    color: (opacity = 1) => `rgba(30, 144, 255, ${opacity})`,
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
     useShadowColorFromDataset: false, // optional
@@ -120,7 +119,10 @@ const DisplayStats = () => {
 
   return (
     <View style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <Text style={{fontSize:30,fontWeight:"bold", color:"white",marginLeft:20, marginBottom:30}}>Past year </Text>
       {dataLoaded ? (
+        
         <LineChart
         withOuterLines={true}
           data={plotData}
@@ -135,6 +137,8 @@ const DisplayStats = () => {
       ) : (
         <Text>Loading</Text>
       )}
+      <Text style={{fontSize:30,fontWeight:"bold", color:"white",marginLeft:20, marginTop:30
+    }}>Sessions </Text>
       <View style={styles.circle}>
         <Text style={styles.circlenumber}>{FocusCount}</Text>
       </View>
@@ -164,6 +168,7 @@ const DisplayStats = () => {
           </View>
         </View>
       </View>
+      </ScrollView>
     </View>
   );
 };
@@ -178,6 +183,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     backgroundColor: "#121212",
+    paddingTop:50,
   },
 
   circle: {
@@ -187,7 +193,7 @@ const styles = StyleSheet.create({
     borderRadius: 200,
     height: 200,
     width: 200,
-    position: "relative",
+
     alignSelf: "center",
     padding: 15,
     justifyContent: "center",
@@ -209,7 +215,9 @@ const styles = StyleSheet.create({
   sessions: {
     width: "90%",
     padding: 15,
-    alignSelf: "flex-end",
+    marginLeft:20,
+    marginTop:50,
+    // alignSelf: "flex-end",
     backgroundColor: "#181818",
     // position: "absolute",
     borderRadius: 15,

@@ -93,7 +93,7 @@ export default function SplashScreen() {
             ])
                 .start();
 
-        }, 500);
+        }, 2000);
 
     }, [])
 
