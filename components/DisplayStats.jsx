@@ -10,7 +10,8 @@ const DisplayStats = () => {
   const [BreakSessions, setBreakSessions] = useState([]);
   // const [taskDataTimestamps, setTaskDataTimestamps] = useState([]);
   // const [taskDataSessionTime, setTaskDataSessionTime] = useState([]);
-  const [plotData, setPlotData] = useState();
+  const [plotData, setPlotData] = useState(
+  );
   const [dataLoaded, setDataLoaded] = useState(false);
   // console.log(plotData);
 
@@ -27,23 +28,34 @@ const DisplayStats = () => {
   // };
 
   useEffect(() => {
+    console.log('hiiii')
+    // let dataSet = [];
+    // console.log(FocusSessions)
+    // FocusSessions.forEach((session) => dataSet.push(session.time));
+    // dataSet = dataSet.slice(0,20)
+    let dataSet = FocusSessions.map((session) => session.time).slice(0,50);
+    let avgLst = []
+    let acc = 20
+    for (let index = 0; index < dataSet.length; index++) {
+      acc += dataSet[index]
+      avgLst.push(acc/(index+1))
+    }
     setPlotData(() => {
-      const dataSet = [];
-      FocusSessions.forEach((session) => dataSet.push(session.time));
       return {
-        labels: [],
+        labels: ["January", "February", "March"],
         datasets: [
           {
-            data: dataSet.slice(0, 100),
-            color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
-            strokeWidth: 2,
+            data: [20, ...avgLst],
+            
           },
         ],
         legend: ["Focus Sessions"],
       };
     });
     setDataLoaded(true);
-  }, []);
+  }, [FocusSessions, db]);
+
+  console.log(plotData)
 
   // useEffect(() => {
   //   createTestSessionData();
@@ -120,17 +132,23 @@ const DisplayStats = () => {
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
     useShadowColorFromDataset: false, // optional
+    // color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
+            // strokeWidth: 2,
   };
 
   return (
     <View style={styles.container}>
       {dataLoaded ? (
         <LineChart
+        withOuterLines={true}
           data={plotData}
           width={screenWidth}
           height={220}
           chartConfig={chartConfig}
-          // bezier={}
+          withDots={false}
+          withVerticalLines = {false}
+          withHorizontalLines={false}
+          bezier
         />
       ) : (
         <Text>Loading</Text>
