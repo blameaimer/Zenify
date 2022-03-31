@@ -27,23 +27,22 @@ const DisplayStats = () => {
   // };
 
   useEffect(() => {
-    setPlotData(async () => {
+    setPlotData(() => {
       const dataSet = [];
       FocusSessions.forEach((session) => dataSet.push(session.time));
       return {
-        labels: ["January", "February", "March", "April", "May", "June"],
+        labels: [],
         datasets: [
           {
-            data: dataSet,
-            //data: [1, 2, 3, 4, 5, 6, 7],
+            data: dataSet.slice(0, 100),
             color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
             strokeWidth: 2,
           },
         ],
-        legend: ["Rainy Days"],
+        legend: ["Focus Sessions"],
       };
     });
-    // setDataLoaded(true);
+    setDataLoaded(true);
   }, []);
 
   // useEffect(() => {
@@ -131,6 +130,7 @@ const DisplayStats = () => {
           width={screenWidth}
           height={220}
           chartConfig={chartConfig}
+          // bezier={}
         />
       ) : (
         <Text>Loading</Text>
