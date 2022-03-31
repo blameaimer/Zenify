@@ -110,7 +110,7 @@ const DisplayStats = () => {
     backgroundGradientFromOpacity: 0,
     backgroundGradientTo: "#08130D",
     backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    color: (opacity = 1) => `rgba(30, 144, 255, ${opacity})`,
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
     useShadowColorFromDataset: false, // optional
@@ -173,20 +173,20 @@ export default DisplayStats;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    flexDirection: "column",
+    justifyContent: "space-around",
+    // flexDirection: "column",
     alignItems: "center",
     width: "100%",
     backgroundColor: "#121212",
   },
 
   circle: {
-    marginTop: 40,
+    // marginTop: 40,
     backgroundColor: "#282828",
     borderColor: "dodgerblue",
     borderRadius: 200,
-    height: 200,
-    width: 200,
+    height: 160,
+    width: 160,
     position: "relative",
     alignSelf: "center",
     padding: 15,
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   },
   circlenumber: {
     alignSelf: "center",
-    fontSize: 55,
+    fontSize: 47,
     color: "#b3b3b3",
   },
   text: {
@@ -209,15 +209,19 @@ const styles = StyleSheet.create({
   sessions: {
     width: "90%",
     padding: 15,
-    alignSelf: "flex-end",
+    // alignSelf: "flex-end",
     backgroundColor: "#181818",
     // position: "absolute",
     borderRadius: 15,
+  },
+  sessionWrapper:{
+
   },
   infobox: {},
   top: {
     justifyContent: "space-between",
     paddingRight: 7,
+    width: "100%",
     flexDirection: "row",
   },
   bottom: {
