@@ -15,6 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { trackContext } from "./utils/contexts";
 import { LogBox } from "react-native";
 import SignUpScreen from "./Screens/SignUpScreen";
+import SplashScreen from "./Screens/SplashScreen";
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
   "AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage",
@@ -32,6 +33,16 @@ export default function App() {
         <Stack.Navigator
           screenOptions={{ headerShown: true, headerShadowVisible: false }}
         >
+           <Stack.Screen
+            name="SplashScreen"
+            component={SplashScreen}
+            options={{
+              headerTitle: "",
+              headerTransparent: true,
+              headerLeft: ()=> null
+              
+            }}
+          />
           <Stack.Screen
             name="LoginScreen"
             component={LoginScreen}
@@ -137,6 +148,7 @@ export default function App() {
                 ),
             }}
           />
+          
         </Stack.Navigator>
       </NavigationContainer>
     </trackContext.Provider>
