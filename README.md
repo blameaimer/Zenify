@@ -8,7 +8,7 @@
   <p align="center">
     <a href="#-intro"><b>What is this?</b></a>
     &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
-    <a href="https://nc-news-blame.netlify.app/"><b>Hosted Version</b></a>
+    <a href="https://expo.io/@ha1099/projects/Zenify"><b>Hosted Version</b></a>
     &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
     <a href="#-getting-started"><b>Usage</b></a>
     &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
