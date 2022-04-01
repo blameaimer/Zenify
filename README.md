@@ -25,6 +25,11 @@
 
 Zenify is a cross platform mobile app built in <a href="https://expo.dev/"><b>Expo</b></a> to aid mindfulness and concentration. Users have access to guided meditations, ambient sounds and a timer which can structure and record focus and break sessions.
 
+The front end and the majority of the application is built in <a href="https://reactnative.dev/"><b>React Native</b></a>. The app uses stack and tab navigation. For the back-end all of the user data is being stored in a <a href="https://firebase.google.com/docs/database"><b>Firebase Realtime non-relational database.</b></a> Authentication is also handled through <a href="https://firebase.google.com/"><b>Firebase </b></a>. The meditation section is using the <a href="https://docs.expo.dev/versions/latest/sdk/av/"><b>Expo AV</b></a> package that provides media functionality asynchronously.
+
+The idea came from wanting to provide people with mindfulness and focus tools for free with a minimal and elegant interface.
+
+
 ---
 
 ## 🚀 Getting Started
