@@ -29,7 +29,7 @@ Zenify is a cross platform mobile app built in <a href="https://expo.dev/"><b>Ex
 
 ## 🚀 Getting Started
 
-* In your terminal go into directory and then run the following command:
+* In your terminal go into your preferred directory and then run the following command:
 
         git clone https://github.com/blameaimer/Zenify
         cd Zenify
