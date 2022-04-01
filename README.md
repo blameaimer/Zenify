@@ -23,7 +23,7 @@
 
 ## 👋 Intro
 
-Zenify is a cross platform mobile app built in  to aid mindfulness and concentration. Users have access to guided meditations, ambient sounds and a timer which can structure and record focus and break sessions.
+Zenify is a cross platform mobile app built in <a href="https://expo.dev/"><b>Expo</b></a> to aid mindfulness and concentration. Users have access to guided meditations, ambient sounds and a timer which can structure and record focus and break sessions.
 
 ---
 
