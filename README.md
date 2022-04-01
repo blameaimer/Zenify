@@ -1,7 +1,7 @@
 <div align="center">
-  <img src="https://lknconnectcommunity.com/wp-content/uploads/2021/09/NaturesCue_Seasons-801x675.jpg" alt="ReactJS LOGO" width="600" />
+  <img src="https://www.pixel4k.com/wp-content/uploads/2018/03/Wallpaper%20forest,%20mountains,%20violet,%20birds,%20art,%20HD,%20Abstract%20668473088.jpg" alt="ReactJS LOGO" width="600" />
   <p></p>
-  <h1>☯︎ ZENIFY ☯︎</h1>
+  <h1>ZENIFY</h1>
   <p></p>
  
   <br />
@@ -23,21 +23,21 @@
 
 ## 👋 Intro
 
-IT'S A INNOVATIVE MULTIPLATFORM MOBILE APPLICATION BUILT IN REACT NATIVE TO ZENIFY THE USERS ☯︎☯︎☯︎☯︎ :boom: 🔥🔥🔥🔥
+Zenify is a cross platform mobile app built in  to aid mindfulness and concentration. Users have access to guided meditations, ambient sounds and a timer which can structure and record focus and break sessions.
 
 ---
 
 ## 🚀 Getting Started
 
-* In your terminal go into a directory and then run the following command:
+* In your terminal go into directory and then run the following command:
 
         git clone https://github.com/blameaimer/Zenify
         cd Zenify
 
 
-* Run this code in your terminal(!!MAKE SURE YOU HAVE Android or IOS emulator running!!):
+* Run this code in your terminal (<b>Make sure you have Android/IOS emulator running or <a href="https://expo.dev/client"><b>Expo Go</b></a> is downloaded on your smartphone so you can scan the QR code</b>):
 
-       
+        
         npm i
         npm start
 
