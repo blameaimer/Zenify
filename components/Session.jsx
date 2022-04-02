@@ -7,26 +7,6 @@ import { handleSessionNotification } from "../utils/notifications.js";
 import SessionModal from "./SessionModal";
 
 export default function Session() {
-  const [tasks, setTasks] = useState([]);
-
-  useEffect(() => {
-    const taskRef = db.ref("users").child(auth.currentUser.uid).child("tasks");
-    const listener = taskRef.orderByChild("index").on(
-      "value",
-      (snapshot) => {
-        const fetchedTasks = [];
-        snapshot.forEach((task) => {
-          fetchedTasks.push(task);
-        });
-        setTasks(fetchedTasks);
-      },
-      (errorObject) => {
-        console.log("The readfailed: " + errorObject);
-      }
-    );
-    return () => taskRef.off("value", listener);
-  }, [db]);
-
   const focusSessionData = {
     title: "Focus",
     currentDuration: 10,
@@ -47,6 +27,7 @@ export default function Session() {
   const [remainingTime, setRemainingTime] = useState(
     sessionData.currentDuration
   );
+  const [sessionDuration, setSessionDuration] = useState();
 
   useEffect(() => {
     setKey((prevKey) => prevKey + 1);
@@ -78,9 +59,9 @@ export default function Session() {
   }, [db]);
 
   const handleCompletion = () => {
-    console.log("on complete called");
-    setModalVisible(true);
+    console.log("handleCompletion called");
     setIsPlaying(false);
+    setModalVisible(true);
     const SessionRef = db
       .ref("users")
       .child(auth.currentUser.uid)
@@ -109,6 +90,7 @@ export default function Session() {
       <ChangeSessionTime
         durationOptions={sessionData.durationOptions}
         setSessionData={setSessionData}
+        setKey={setKey}
       />
       <SessionModal
         isBreak={isBreak}
@@ -130,11 +112,14 @@ export default function Session() {
           onUpdate={(remainingTime) => setRemainingTime(remainingTime)}
           colors={["#015489", "#008bbe", "#06aac3", "#A30000"]}
           colorsTime={[7, 5, 2, 0]}
-          onComplete={handleCompletion}
+          onComplete={() => {
+            handleCompletion();
+            setKey((prevKey) => prevKey + 1);
+            return;
+          }}
         >
           {({ remainingTime }) => {
-            // console.log(remainingTime, "<<< remaining time from timer");
-            // console.log(sessionData.currentDuration, "<<< duration");
+            console.log();
             const minutes = Math.floor(remainingTime / 60);
             const seconds = remainingTime % 60;
             const paddedSeconds = String(seconds).padStart(2, "0");

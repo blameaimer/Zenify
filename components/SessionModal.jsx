@@ -22,87 +22,86 @@ export default function SessionModal({
   return (
     <View style={styles.centeredView}>
       {/* <BlurView style={styles.cardContainer} blurType="light" blurAmount={20}> */}
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <TouchableOpacity
-                style={styles.closeButton}
-                onPress={() => setModalVisible(!modalVisible)}
-              >
-                <Feather name="x-circle" color={"white"} size={25} />
-              </TouchableOpacity>
-              <Text style={styles.modalText}>
-                {isBreak ? "Get Back to Work!" : "Time for a Break!"}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Feather name="x-circle" color={"white"} size={25} />
+            </TouchableOpacity>
+            <Text style={styles.modalText}>
+              {isBreak ? "Get Back to Work!" : "Time for a Break!"}
+            </Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose, styles.topButton]}
+              onPress={() => {
+                setIsBreak((isBreak) => !isBreak);
+                setIsPlaying(true);
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={styles.topButton}>
+                {isBreak ? "Start Focus" : "Start Break"}
               </Text>
-              <Pressable
-                style={[styles.button, styles.buttonClose, styles.topButton]}
-                onPress={() => {
-                  setIsBreak((isBreak) => !isBreak);
-                  setIsPlaying(true);
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                <Text style={styles.topButton}>
-                  {isBreak ? "Start Focus" : "Start Break"}
-                </Text>
-              </Pressable>
+            </Pressable>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => {
+                setSessionData((currentSession) => {
+                  setKey((prevKey) => prevKey + 1);
+                  return {
+                    ...currentSession,
+                    currentDuration: 5,
+                  };
+                });
+
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={styles.textStyle}>+5 min</Text>
+            </Pressable>
+
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => {
+                setIsBreak((isBreak) => !isBreak);
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={styles.textStyle}>
+                {isBreak ? "Finish Break" : "Finish Session"}
+              </Text>
+            </Pressable>
+            {isBreak ? (
+              <Text></Text>
+            ) : (
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => {
                   setSessionData((currentSession) => {
-                    setKey((prevKey) => prevKey + 1);
-                    return {
-                      ...currentSession,
-                      currentDuration: 5,
-                    };
+                    return { ...currentSession, currentDuration: 5 };
                   });
+                  //  currentDuration: 5 * 60
 
                   setModalVisible(!modalVisible);
                 }}
               >
-                <Text style={styles.textStyle}>+5 min</Text>
+                <Text style={styles.textStyle}>Skip Break</Text>
               </Pressable>
-
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => {
-                  setIsBreak((isBreak) => !isBreak);
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                <Text style={styles.textStyle}>
-                  {isBreak ? "Finish Break" : "Finish Session"}
-                </Text>
-              </Pressable>
-              {isBreak ? (
-                <Text></Text>
-              ) : (
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => {
-                    setSessionData((currentSession) => {
-                      // console.log(currentSession);
-                      return { ...currentSession, currentDuration: 5 };
-                    });
-                    //  currentDuration: 5 * 60
-
-                    setModalVisible(!modalVisible);
-                  }}
-                >
-                  <Text style={styles.textStyle}>Skip Break</Text>
-                </Pressable>
-              )}
-            </View>
+            )}
           </View>
-        </Modal>
+        </View>
+      </Modal>
       {/* </BlurView> */}
     </View>
   );
