@@ -3,7 +3,11 @@ import { View, TouchableOpacity, Text, StyleSheet, Modal } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-export default function ChangeSessionTime({ durationOptions, setSessionData }) {
+export default function ChangeSessionTime({
+  durationOptions,
+  setSessionData,
+  setKey,
+}) {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -41,17 +45,18 @@ export default function ChangeSessionTime({ durationOptions, setSessionData }) {
                 fontSize: 27,
               }}
               onValueChange={(itemValue) => {
-                setModalVisible(false);
+                setKey((prevKey) => prevKey + 1);
                 setSessionData((currentSession) => {
                   return { ...currentSession, currentDuration: itemValue };
                 });
+                setModalVisible(false);
               }}
             >
               {durationOptions.map((number) => {
                 return (
                   <Picker.Item
                     label={`${number}`}
-                    value={`${number}`}
+                    value={number}
                     key={`${number}`}
                   ></Picker.Item>
                 );
