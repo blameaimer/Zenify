@@ -24,7 +24,7 @@ const DisplayStats = () => {
         labels: [, "              Average Length", ""],
         datasets: [
           {
-            data: [...avgLst],
+            data: [0, ...avgLst],
           },
         ],
         legend: ["Focus Sessions"],
@@ -87,8 +87,6 @@ const DisplayStats = () => {
   let TotalBreakTime = 0;
   FocusSessions.forEach((session) => {
     TotalWorkTime += session.time;
-    // console.log(typeof session.time);
-    // console.log(typeof TotalWorkTime);
   });
   BreakSessions.forEach((session) => {
     TotalBreakTime += session.time;

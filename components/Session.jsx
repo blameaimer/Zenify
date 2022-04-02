@@ -119,7 +119,6 @@ export default function Session() {
           }}
         >
           {({ remainingTime }) => {
-            console.log();
             const minutes = Math.floor(remainingTime / 60);
             const seconds = remainingTime % 60;
             const paddedSeconds = String(seconds).padStart(2, "0");
