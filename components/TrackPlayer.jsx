@@ -196,6 +196,15 @@ export default function TrackPlayer() {
     }
   }, []);
 
+  useEffect(() => {
+    return playbackInstance
+      ? () => {
+          console.log('Unloading Sound');
+          playbackInstance.unloadAsync(); 
+        }
+      : undefined;
+  }, [playbackInstance]);
+
   onPlaybackStatusUpdate = (status) => {
     setIsBuffering(status.isBuffering);
     setDurationMillis(status.durationMillis);

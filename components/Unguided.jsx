@@ -1,5 +1,5 @@
 
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect,useRef } from "react";
 import {
   StyleSheet,
   Switch,
@@ -29,15 +29,14 @@ const ListItem = ({ item }) => {
 };
 function Unguided(props) {
     const [sound, setSound] = useState();
-    const [name, setName] = useState(null);
     const [isPlaying, setIsPlaying]=useState(false);
-
+    const soundRef = useRef()
 
     async function playSound() {
       console.log('Loading Sound');
       
       const { sound } = await Audio.Sound.createAsync(
-       { uri: `https://moodly.site/sounds/${name}.mp3`}
+       { uri: `https://moodly.site/sounds/${soundRef.current}.mp3`}
       );
       setSound(sound);
       sound.setIsLoopingAsync(true);
@@ -45,7 +44,7 @@ function Unguided(props) {
       if(!isPlaying){
       await sound.playAsync()}else {
         await sound.stopAsync()
-        setName(null)
+       
       }
       setIsPlaying((currentPlay) => !currentPlay);
     }
@@ -59,7 +58,7 @@ function Unguided(props) {
         : undefined;
     }, [sound]);
 
-  
+
 
    
     
@@ -102,8 +101,9 @@ function Unguided(props) {
               return null;
             }
             return                    <TouchableOpacity
+            
             onPress={() => {
-              setName(item.text.toLowerCase())
+              soundRef.current = item.text.toLowerCase()
               playSound();
             }}
           >
