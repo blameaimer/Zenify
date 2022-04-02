@@ -21,7 +21,7 @@ const DisplayStats = () => {
     }
     setPlotData(() => {
       return {
-        labels: [, "              Average Length", ""],
+        labels: [, "             Average Length", ""],
         datasets: [
           {
             data: [0, ...avgLst],
@@ -105,9 +105,7 @@ const DisplayStats = () => {
     color: (opacity = 1) => `rgba(30, 144, 255, ${opacity})`,
     strokeWidth: 2,
     barPercentage: 0.5,
-    useShadowColorFromDataset: false, // optional
-    // color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
-    // strokeWidth: 2,
+    useShadowColorFromDataset: false,
   };
 
   return (
