@@ -38,7 +38,12 @@ export default function ChangeSessionTime({
             }}
           >
             <Picker
-              // style={{ }}
+              style={{
+                backgroundColor: "#22303c",
+                marginTop: 50,
+                width: "50%",
+                alignSelf: "center",
+              }}
               itemStyle={{
                 backgroundColor: "black",
                 color: "white",

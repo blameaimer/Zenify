@@ -6,7 +6,6 @@ import {
   Alert,
   StyleSheet,
   TouchableOpacity,
-  BlurView,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 
@@ -21,7 +20,6 @@ export default function SessionModal({
 }) {
   return (
     <View style={styles.centeredView}>
-      {/* <BlurView style={styles.cardContainer} blurType="light" blurAmount={20}> */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -64,7 +62,6 @@ export default function SessionModal({
                     currentDuration: 5,
                   };
                 });
-
                 setModalVisible(!modalVisible);
               }}
             >
@@ -91,8 +88,6 @@ export default function SessionModal({
                   setSessionData((currentSession) => {
                     return { ...currentSession, currentDuration: 5 };
                   });
-                  //  currentDuration: 5 * 60
-
                   setModalVisible(!modalVisible);
                 }}
               >
@@ -102,14 +97,13 @@ export default function SessionModal({
           </View>
         </View>
       </Modal>
-      {/* </BlurView> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   centeredView: {
-    marginTop: "50%",
+    marginTop: "25%",
     width: "75%",
     alignSelf: "center",
     justifyContent: "center",
@@ -122,7 +116,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#fff",
     padding: 10,
-    paddingBottom: 20,
+    paddingBottom: 40,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {

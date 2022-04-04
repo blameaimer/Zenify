@@ -27,7 +27,6 @@ export default function Session() {
   const [remainingTime, setRemainingTime] = useState(
     sessionData.currentDuration
   );
-  const [sessionDuration, setSessionDuration] = useState();
 
   useEffect(() => {
     setKey((prevKey) => prevKey + 1);
@@ -59,7 +58,6 @@ export default function Session() {
   }, [db]);
 
   const handleCompletion = () => {
-    console.log("handleCompletion called");
     setIsPlaying(false);
     setModalVisible(true);
     const SessionRef = db
@@ -111,7 +109,12 @@ export default function Session() {
           trailColor={"#22303c"}
           onUpdate={(remainingTime) => setRemainingTime(remainingTime)}
           colors={["#015489", "#008bbe", "#06aac3", "#A30000"]}
-          colorsTime={[7, 5, 2, 0]}
+          colorsTime={[
+            sessionData.currentDuration * 0.75,
+            sessionData.currentDuration * 0.5,
+            sessionData.currentDuration * 0.25,
+            0,
+          ]}
           onComplete={() => {
             handleCompletion();
             setKey((prevKey) => prevKey + 1);
@@ -149,15 +152,9 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     backgroundColor: "black",
   },
-  changeLength: {
-    marginTop: "20%",
-    color: "white",
-    fontSize: 40,
-    fontWeight: "bold",
-  },
   circle: {
     position: "absolute",
-    marginTop: "50%",
+    marginTop: "35%",
     justifyContent: "center",
     alignSelf: "center",
   },
