@@ -102,10 +102,9 @@ const styles = StyleSheet.create({
     margin: 15,
   },
   modalView: {
-    margin: 10,
     backgroundColor: "#22303C",
     borderRadius: 20,
-    padding: 10,
+    padding: 5,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -115,6 +114,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    width: "90%",
   },
 
   textStyle: {
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    margin: 10,
+    margin: 5,
     paddingVertical: 6,
     borderBottomWidth: 1,
     color: "white",
@@ -137,10 +137,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
+    width: "70%",
   },
   button: {
     backgroundColor: "#121212",
-    width: "100%",
+    width: "40%",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
