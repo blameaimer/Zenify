@@ -47,7 +47,7 @@ const SignUpScreen = () => {
   };
 
   return (
-    <View style={styles.container} behavior="padding">
+    <View style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
