@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { View, TouchableOpacity, Text, StyleSheet, Modal } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Modal,
+  Platform,
+} from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -38,7 +45,9 @@ export default function ChangeSessionTime({
             }}
           >
             <Picker
-              // style={{ }}
+              style={{
+                backgroundColor: Platform.OS === "android" ? "#22303c" : "",
+              }}
               itemStyle={{
                 backgroundColor: "black",
                 color: "white",
