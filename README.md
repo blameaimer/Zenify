@@ -10,10 +10,13 @@
     &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
     <a href="https://expo.io/@ha1099/projects/Zenify"><b>Published Version</b></a>
     &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
+    <a href ="https://youtu.be/NlL7BEB17N4"> <b>Video Showcase</b></a>
+    &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
     <a href="#-getting-started"><b>Usage</b></a>
     &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
     <a href="#-further-help"><b>Need help?</b></a>
-    &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
+
+  
   </p>
   <br />
 </div>
